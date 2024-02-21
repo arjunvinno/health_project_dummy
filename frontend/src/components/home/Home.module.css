@@ -45,6 +45,11 @@
 .ediBtn_color_active {
   background-color: #3e5282 !important;
 }
+.ediBtn_color_onDisable{
+  background-color: #3e5282 !important;
+  opacity: 0.5;
+  color: white!important;
+}
 .diagnosisBtn {
   width: 14rem;
   border-color: #6c81c0 !important ;

@@ -387,7 +387,12 @@ const Home = () => {
                 : true
             }
             variant={"contained"}
-            className={styles.ediBtn_color_active}
+            className={  (activeBtns.edit &&
+              (dataRow1.length > 0 ||
+                dataRow2.length > 0 ||
+                dataRow3.length > 0) &&
+              !checkAllSaved()) ||
+            !activeBtns.edit?styles.ediBtn_color_active:styles.ediBtn_color_onDisable}
           >
             {activeBtns.edit ? "Complete" : "Edit"}
           </Button>

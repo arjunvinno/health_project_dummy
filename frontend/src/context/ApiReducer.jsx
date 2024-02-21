@@ -3,6 +3,8 @@ import axios from "axios";
 
 const baseUrl = "http://localhost:8080";
 
+const hostUrl ="https://health-project-dummy.onrender.com"
+
 export const apiReducer = (state, action) => {
   switch (action.type) {
     // codes
@@ -506,10 +508,10 @@ export const fetchData = async (dispatch, types, path, params, queryParams) => {
     let url;
     if (params) {
       url = params.procedureType
-        ? `${baseUrl}/${path}/${params.userId}/${params.procedureType}`
-        : `${baseUrl}/${path}/${params.userId}`;
+        ? `${hostUrl}/${path}/${params.userId}/${params.procedureType}`
+        : `${hostUrl}/${path}/${params.userId}`;
     } else {
-      url = `${baseUrl}/${path}`;
+      url = `${hostUrl}/${path}`;
     }
 
     if (!queryParams) {
@@ -538,7 +540,7 @@ export const fetchData = async (dispatch, types, path, params, queryParams) => {
 export const saveData = async (dispatch, types, path, body) => {
   try {
     dispatch({ type: types.loading });
-    const response = await axios.post(`${baseUrl}/${path}`, body);
+    const response = await axios.post(`${hostUrl}/${path}`, body);
     dispatch({ type: types.dataType, payload: response.data });
   } catch (error) {
     console.log(error);
@@ -558,7 +560,7 @@ export const deleteData = async (dispatch, types, path, params) => {
   try {
     dispatch({ type: types.loading });
     const response = await axios.delete(
-      `${baseUrl}/${path}/${params.userId}/${params.reportId}`
+      `${hostUrl}/${path}/${params.userId}/${params.reportId}`
     );
     dispatch({ type: types.dataType, payload: response.data });
   } catch (error) {
@@ -576,7 +578,7 @@ export const deleteData = async (dispatch, types, path, params) => {
 
 export const updateData = async (dispatch, types, path, params, updateData) => {
   try {
-    let url = `${baseUrl}/${path}`;
+    let url = `${hostUrl}/${path}`;
     if (params.userId) {
       url = `${url}/${params.userId}`;
     }
