@@ -8,7 +8,7 @@
   position: relative;
   background-image: url("./assests/Abstract\ Bright\ Simple\ Tech\ img.png");
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: 100vw 100vh;
   /* min-height: 100vh; */
   background-attachment: fixed;
   min-height: 100vh;
