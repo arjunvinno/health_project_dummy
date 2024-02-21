@@ -1,0 +1,169 @@
+.actions {
+  display: flex;
+  align-items: last baseline;
+  justify-content: left;
+}
+
+.deleteIcon {
+  color: #dd5858e6;
+  cursor: pointer;
+  padding-left: 5px;
+}
+.deleteIcon:hover {
+  color: #e11f1fe6;
+}
+
+td {
+  color: rgb(0 0 0 / 78%) !important;
+  padding: 16px 6px !important;
+  font-size: 14px !important;
+}
+
+.alignSelect {
+  margin-top: 16px !important;
+  max-width: 8rem !important;
+}
+.editIcon,
+.saveIcon {
+  color: #84a5e3 !important;
+  cursor: pointer;
+  padding-right: 5px;
+}
+.saveIcon:hover {
+  color: #4a6eb3 !important;
+}
+
+.navIcon {
+  cursor: pointer;
+}
+
+.detailsField {
+  max-width: 8rem;
+  overflow: hidden;
+}
+.detailsField > p {
+  margin: 0px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 90%;
+  overflow: hidden;
+}
+
+.theadProcedureEdit {
+  width: 28% !important;
+}
+.theadDia {
+  width: 23% !important;
+}
+.theadProcedureComplete {
+  width: 25% !important;
+}
+
+.dateField {
+  padding-top: 16px !important;
+}
+.dateFieldDiagnosis {
+  padding-top: 16px !important;
+}
+.dateFieldProcedure {
+  padding-top: 16px !important;
+}
+.actionOnEdit {
+  position: relative;
+  top: 13px;
+  display: flex;
+  align-items: last baseline;
+  justify-content: left;
+}
+.popUp {
+  max-width: 15vw !important;
+  word-wrap: break-word;
+  word-break: break-all;
+}
+.info {
+  width: "inherit";
+}
+.tInfoTd > label,
+.detailsField > label,
+.codeClass > label {
+  display: none;
+}
+@media screen and (max-width: 834px) {
+  .detailsField > p {
+    margin: 0px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 8rem;
+    overflow: hidden;
+  }
+  .dateFieldDiagnosis {
+    width: 6.3rem !important;
+  }
+  .dateFieldProcedure {
+    width: 7rem !important;
+  }
+  .popUp {
+    max-width: 15rem !important;
+  }
+  .info {
+    width: 7rem;
+  }
+}
+.defaultClass {
+  max-width: 8rem !important;
+}
+.tInfoTdOnEdit > label {
+  display: none;
+}
+@media screen and (max-width: 600px) {
+  .tInfoTd > label,
+  .detailsField > label,
+  .codeClass > label {
+    display: inline;
+    margin-right: 15px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .tInfoTd,
+  .detailsField,
+  .codeClass {
+    max-width: 79vw !important;
+    width: 100% !important;
+    display: flex !important;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .tInfoTd > p,
+  .detailsField > p,
+  .codeClass > p {
+    width: 50%;
+  }
+  .tInfoTdOnEdit > label {
+    display: block;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .tInfoTdOnEdit {
+    max-width: 79vw !important;
+  }
+  .dateFieldProcedure {
+    width: 100% !important;
+  }
+  .dateFieldDiagnosis {
+    width: 100% !important;
+  }
+  .alignSelect {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  .actionOnEdit {
+    top: 0px;
+  }
+  .popUp {
+    max-width: 100%!important;
+  }
+  .font_600>label{
+    font-weight: 600;
+  }
+
+}

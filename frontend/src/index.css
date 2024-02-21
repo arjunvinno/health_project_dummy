@@ -1,0 +1,48 @@
+body {
+  margin: 0;
+  font-family: sans-serif, "Montserrat" !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  max-width: 100vw !important;
+  box-sizing: border-box !important;
+  /* background-image: url("./assests/Abstract\ Bright\ Simple\ Tech\ img.png");
+  background-repeat: no-repeat;
+  background-size: cover; */
+  /* min-height: 100vh; */
+  /* background-attachment: fixed; */
+  padding: 0px !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+th {
+  font-family: "Montserrat" !important;
+  font-weight: 600;
+}
+button,
+input,
+p,
+span,
+td,
+label,
+li {
+  font-family: "Montserrat" !important;
+  font-weight: 400;
+}
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.mui-popover {
+  padding-right: 0 !important;
+}
+.gBackground {
+  background-image: url("./assests/Abstract\ Bright\ Simple\ Tech\ img.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}

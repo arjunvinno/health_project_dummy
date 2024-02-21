@@ -1,0 +1,15 @@
+.pointer {
+  cursor: pointer;
+}
+.container {
+  padding: 5rem 0px;
+}
+.App {
+  position: relative;
+  background-image: url("./assests/Abstract\ Bright\ Simple\ Tech\ img.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* min-height: 100vh; */
+  background-attachment: fixed;
+  min-height: 100vh;
+}

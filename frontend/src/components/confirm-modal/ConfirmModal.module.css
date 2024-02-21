@@ -1,0 +1,18 @@
+.modalHeader {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+}
+.modalHeader > p {
+  font-weight: 600;
+  font-size: 18px;
+  margin: 0px;
+}
+
+.alertIcon {
+  color: salmon !important;
+  font-size: 6rem !important;
+  margin-right: 15px;
+  margin-bottom: 10px;
+}

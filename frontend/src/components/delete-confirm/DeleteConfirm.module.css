@@ -1,0 +1,15 @@
+.modalHeader {
+  display: flex;
+  align-items: center;
+}
+.modalHeader > p {
+  font-weight: 600;
+  font-size: 18px;
+  margin: 0px;
+}
+
+.alertIcon {
+  color: red !important;
+  font-size: 30px !important;
+  margin-right: 15px;
+}

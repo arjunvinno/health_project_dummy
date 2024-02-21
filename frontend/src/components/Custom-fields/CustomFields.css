@@ -1,0 +1,54 @@
+.custom-cont {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+  width: 100%;
+}
+
+.label-cont {
+  margin-right: 10px;
+}
+
+.label {
+  color: #666;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.input-cont {
+  flex: 1;
+}
+
+.patient-field {
+  border: 0;
+}
+.patient-field > div > input,
+.patient-field > div > div {
+  -webkit-text-fill-color: rgb(0 0 0 / 67%) !important;
+  padding: 10.5px 14px !important;
+}
+.age-cont {
+  min-width: 130px;
+  max-width: 130px;
+}
+@media screen and (max-width: 834px) {
+  .label {
+    font-size: 13px;
+    font-weight: 600;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .label-cont {
+    width: 86px !important;
+  }
+  .label {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+  }
+  .age-cont {
+    min-width: inherit;
+    max-width: inherit;
+  }
+}

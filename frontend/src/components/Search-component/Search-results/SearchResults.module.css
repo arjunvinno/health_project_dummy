@@ -1,0 +1,30 @@
+.searchResults {
+  position: absolute;
+  top: 56px;
+  left: 0px;
+  background-color: white;
+  background: white;
+  max-height: 15rem;
+  z-index: 20;
+  overflow-y: auto;
+  width: 100%;
+  padding: 0 20px;
+  border-color: rgb(0, 0, 0);
+  border-radius: 0px 0px 5px 5px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
+    rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+  box-sizing: border-box;
+}
+.searchResults > p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  color: rgba(0, 0, 0, 0.505);
+  cursor: pointer;
+  font-size: 14px;
+}
+.searchResults > p:hover {
+  color: rgb(0 0 0 / 68%) !important;
+  font-weight: 600 !important;
+}

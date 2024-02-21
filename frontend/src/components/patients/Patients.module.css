@@ -1,0 +1,75 @@
+.container {
+  padding: 2rem 0px;
+  width: 100% !important;
+  padding-left: 30px !important;
+  padding-right: 30px !important;
+}
+.addBtn {
+  margin-bottom: 20px !important;
+  margin-left: auto !important;
+  background-color: #3e5282 !important;
+}
+.btnWrapper {
+  display: flex;
+  justify-content: right;
+}
+.modalWrapper {
+  display: flex;
+  gap: 4%;
+  width: 45vw;
+  margin-bottom: 20px;
+}
+.inputTags {
+  width: 300px;
+}
+.dialog {
+  min-width: 700px !important;
+}
+.dobAlert {
+  color: #d32f2f;
+  font-size: 0.75rem;
+  line-height: 1.66;
+  letter-spacing: 0.03333em;
+  text-align: left;
+  margin-top: 3px;
+  margin-right: 14px;
+  margin-bottom: 0;
+  margin-left: 14px;
+}
+.css-1fu2e3p-MuiPaper-root-MuiDialog-paper {
+  margin: 0px !important;
+}
+.submitBtn {
+  background-color: #3e5282 !important;
+}
+
+.submitBtn:hover {
+  background-color: #3e5282 !important;
+}
+
+Dialog > .MuiDialog-container > .MuiPaper-root-MuiDialog-paper {
+  width: 100vw !important;
+  margin: 0px !important;
+}
+.contentBody {
+  padding: 16px 16px !important;
+}
+
+@media screen and (max-width: 834px) {
+  .modalWrapper {
+    width: 65vw;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .contentBody {
+    width: 87vw !important;
+  }
+  .dialogContainer > div:nth-child(3) > div {
+    min-width: 95vw !important;
+  }
+
+  .modalWrapper {
+    width: 100%;
+  }
+}

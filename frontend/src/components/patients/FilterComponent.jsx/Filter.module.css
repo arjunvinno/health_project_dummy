@@ -1,0 +1,114 @@
+.container {
+  padding: 20px 10px;
+  background-color: #f5f5f5;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+.filterActive {
+  background-color: #203470 !important;
+  color: White !important;
+  margin-left: 20px !important;
+  margin-bottom: 5px !important;
+}
+.filterChip {
+  background-color: #6c81c0 !important;
+  color: White !important;
+  margin-left: 20px !important;
+  margin-bottom: 5px !important;
+}
+.filterFieldsContainer {
+  padding: 20px 20px;
+  width: 100%;
+}
+.dobAlert {
+  color: #d32f2f;
+  font-size: 0.75rem;
+  line-height: 1.66;
+  letter-spacing: 0.03333em;
+  text-align: left;
+  margin-top: 3px;
+  margin-right: 14px;
+  margin-bottom: 0;
+  margin-left: 97px;
+}
+.field {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  align-items: center;
+  width: 35%;
+}
+.field > label {
+  max-width: 170px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #000000a6;
+  min-width: 97px;
+}
+.deleIcon {
+  margin-left: 10px;
+  cursor: pointer;
+}
+.footerContainer {
+  width: 100%;
+  padding: 5px;
+  display: flex;
+  justify-content: end;
+}
+.filterBody {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 79%;
+}
+.dateRangeBody {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+@media screen and (max-width: 1200px) {
+  .field {
+    width: 45%;
+  }
+  .filterBody {
+    width: 76%;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .field {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    align-items: center;
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: 893px) {
+  .field {
+    width: 70%;
+  }
+}
+@media screen and (max-width: 700px) {
+  .field {
+    display: flex;
+    margin-bottom: 15px;
+    align-items: start;
+    flex-direction: column;
+    width: 100%;
+  }
+  .field > label {
+    margin-bottom: 3px;
+  }
+  .filterBody {
+    width: 95%;
+  }
+  .dateRangeBody {
+    flex-direction: column;
+  }
+  .dateRangeBody > div:nth-child(1) {
+    margin-right: 0px !important;
+    margin-bottom: 10px !important;
+  }
+}
