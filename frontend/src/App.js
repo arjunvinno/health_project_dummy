@@ -87,7 +87,7 @@ function App() {
       <RouterProvider router={router} />
 
       <Backdrop
-        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        sx={{ color: "#fff",backdropFilter:'blur(5px)',zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={backDropOpen}
       >
         <CircularProgress thickness={4} />
