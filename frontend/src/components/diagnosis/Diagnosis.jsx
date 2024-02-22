@@ -10,7 +10,7 @@ const Diagnosis = () => {
   const {
     apiDispatch,
     activeBtns,
-    datas: { diagnosticsOnId },
+    datas: { diagnosticsOnId,codes },
     handleBackDropOpen,
     handleBackDropClose,
     setDataRow1,
@@ -143,7 +143,7 @@ const Diagnosis = () => {
     });
   }
   useEffect(() => {
-    if (diagnosticsOnId.loading) {
+    if (diagnosticsOnId.loading || codes.loading) {
       handleBackDropOpen();
     } else {
       if (diagnosticsOnId.data.length > 0) {
@@ -178,6 +178,7 @@ const Diagnosis = () => {
     diagnosticsOnId.error.message,
     diagnosticsOnId.success.message,
     location.pathname,
+    codes.loading
   ]);
 
   useEffect(() => {

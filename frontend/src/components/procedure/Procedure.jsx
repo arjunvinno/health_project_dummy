@@ -19,7 +19,7 @@ const Procedure = () => {
   const {
     apiDispatch,
     activeBtns,
-    datas: { proceduresOnId },
+    datas: { proceduresOnId,codes },
     handleBackDropOpen,
     handleBackDropClose,
     setDataRow1,
@@ -161,7 +161,8 @@ const Procedure = () => {
   }
 
   useEffect(() => {
-    if (proceduresOnId.loading) {
+    console.log(codes.loading)
+    if (proceduresOnId.loading ||codes.loading) {
       handleBackDropOpen();
     } else {
       if (proceduresOnId.data.length > 0) {
@@ -197,6 +198,7 @@ const Procedure = () => {
     proceduresOnId.success.message,
     privateCheck,
     location.pathname,
+    codes.loading
   ]);
 
   useEffect(() => {

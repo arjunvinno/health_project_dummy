@@ -23,6 +23,8 @@ export const apiReducer = (state, action) => {
 
     case types.getCodes: {
       let newState = { ...state };
+      newState.codes.loading = false;
+
       if (action.payload.data.length > 0) {
         newState.codes.data = action.payload.data;
       } else {
@@ -31,7 +33,6 @@ export const apiReducer = (state, action) => {
       if (newState.codes.error.message) {
         newState.codes.error.message = "";
       }
-      newState.codes.loading = false;
 
       return newState;
     }
