@@ -94,11 +94,23 @@ const Diagnosis = () => {
         }
       );
     })();
+    (async () => {
+      await fetchData(
+        apiDispatch,
+        {
+          loading: types.getCodes_Loading,
+          dataType: types.getCodes,
+          error: types.getCodes_error,
+        },
+        `${'store/icd10code'}`
+      );
+       })();
     return () => {
       apiDispatch({ type: types.ClearDiagnosticsAlert_Messages });
       setDataRow1([]);
       setDataRow2([]);
       setDataRow3([]);
+      apiDispatch({ type: types.clearSearchData });
     };
   }, []);
 

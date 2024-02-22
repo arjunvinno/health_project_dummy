@@ -3,7 +3,7 @@ import * as types from "../../../context/actionType";
 import styles from "./SearchResults.module.css";
 import { ActionContext } from "../../../context/ActionContext";
 import { Tooltip } from "@mui/material";
-const SearchResults = ({ setSearchTerm, searchResultsRef }) => {
+const SearchResults = ({ setSearchTerm,searchResults, setSearchResults ,searchResultsRef }) => {
   const {
     datas,
     dataRow1,
@@ -14,11 +14,11 @@ const SearchResults = ({ setSearchTerm, searchResultsRef }) => {
     dataRow3,
     setDataRow3,
   } = useContext(ActionContext);
-  const [searchResults, setSearchResults] = useState([]);
+  // const [searchResults, setSearchResults] = useState([]);
 
-  useEffect(() => {
-    setSearchResults(datas.codes.data);
-  }, [datas.codes.data]);
+  // useEffect(() => {
+  //   setSearchResults(datas.codes.data);
+  // }, [datas.codes.data]);
 
   function onselect(selectedData) {
     setSearchResults([]);
@@ -60,9 +60,9 @@ const SearchResults = ({ setSearchTerm, searchResultsRef }) => {
     document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
-      // setSearchResults([])
+      setSearchResults([])
       document.removeEventListener("mousedown", handleClickOutside);
-      apiDispatch({ type: types.clearSearchData });
+      // apiDispatch({ type: types.clearSearchData });
     };
   }, []);
 

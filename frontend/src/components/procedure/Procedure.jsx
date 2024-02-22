@@ -91,11 +91,23 @@ const Procedure = () => {
         }
       );
     })();
+    (async () => {
+    await fetchData(
+      apiDispatch,
+      {
+        loading: types.getCodes_Loading,
+        dataType: types.getCodes,
+        error: types.getCodes_error,
+      },
+      `${path.current.includes("private")?'store/ccsdcode':'store/opcscode'}`
+    );
+     })();
     return () => {
       apiDispatch({ type: types.ClearProceduresAlert_Messages });
       setDataRow1([]);
       setDataRow2([]);
       setDataRow3([]);
+      apiDispatch({ type: types.clearSearchData });
     };
   }, [location.pathname]);
 

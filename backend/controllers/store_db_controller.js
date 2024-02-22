@@ -70,17 +70,17 @@ const addDataToCollectionFromTextFile = async (xlsFilePath, Model, res) => {
 
 const getDataFromCollection = async (Model, req, res) => {
   try {
-    const searchQuery = req.query.search;
-    if (searchQuery) {
-      const regexQuery = new RegExp(searchQuery, "i");
+    // const searchQuery = req.query.search;
+    // if (searchQuery) {
+    //   const regexQuery = new RegExp(searchQuery, "i");
       const result = await Model.find({
-        $or: [{ description: regexQuery }],
+        // $or: [{ description: regexQuery }],
       });
 
       res.status(200).json({ data: result, error: false });
-    } else {
-      res.status(200).json({ data: [], error: false });
-    }
+    // } else {
+    //   res.status(200).json({ data: [], error: false });
+    // }
   } catch (error) {
     console.error("Error:", error);
     res.status(500).json({ message: error.message, error: true });

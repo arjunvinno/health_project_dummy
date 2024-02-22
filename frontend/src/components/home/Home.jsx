@@ -187,15 +187,15 @@ const Home = () => {
   };
 
   const handleSearchInput = async (result) => {
-    await fetchData(
-      apiDispatch,
-      {
-        loading: types.getCodes_Loading,
-        dataType: types.getCodes,
-        error: types.getCodes_error,
-      },
-      `${searchUrl}?search=${result}`
-    );
+    // await fetchData(
+    //   apiDispatch,
+    //   {
+    //     loading: types.getCodes_Loading,
+    //     dataType: types.getCodes,
+    //     error: types.getCodes_error,
+    //   },
+    //   `${searchUrl}?search=${result}`
+    // );
   };
 
   const handleToggle = () => {
