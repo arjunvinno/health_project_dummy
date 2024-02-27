@@ -42,7 +42,7 @@ const Customtable = ({
     dataRow3,
     setDataRow3,
     apiDispatch,
-    datas: { allPatients },
+    datas: { allPatients, mySavedCodes },
     handleBackDropOpen,
     handleBackDropClose,
   } = useContext(ActionContext);
@@ -305,12 +305,14 @@ const Customtable = ({
         borderRadius: "5px",
         backgroundColor: "white",
       }}
-     
     >
       <TableContainer
         component={Paper}
         sx={{
-          maxHeight: (tableType !== "patients" && tableType==='mysavedcodes')? 600 : "fit-content",
+          maxHeight:
+            tableType !== "patients" && tableType === "mysavedcodes"
+              ? 600
+              : "fit-content",
           boxShadow:
             "0px 0px 0px 0px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.0), 0px 0px 0px 0px rgba(0,0,0,0.12)",
         }}
@@ -322,7 +324,7 @@ const Customtable = ({
           sm={{ minWidth: "87vw", maxWidth: "87vw" }}
           stickyHeader
           aria-label="sticky table"
-          id='reportDowmload'
+          id="reportDowmload"
         >
           <TableHead className="header">
             <TableRow className={styles.headerRow}>{setHeaders()}</TableRow>
@@ -335,7 +337,7 @@ const Customtable = ({
               setNoData()
             ) : (
               <>
-                {(tableType !== "patients" && tableType !== "mysavedcodes") && (
+                {tableType !== "patients" && tableType !== "mysavedcodes" && (
                   <div style={{ height: "10px" }}></div>
                 )}
 
@@ -344,7 +346,8 @@ const Customtable = ({
                   style={{
                     display:
                       (activeBtns.edit || dataRow1.length) &&
-                      (tableType !== "patients" && tableType !== "mysavedcodes") 
+                      tableType !== "patients" &&
+                      tableType !== "mysavedcodes"
                         ? "table-row"
                         : "none",
                   }}
@@ -385,7 +388,7 @@ const Customtable = ({
                     >
                       <TableRow
                         className={
-                          (tableType === "patients")
+                          tableType === "patients"
                             ? `${styles.activeOnHover} ${
                                 i !== dataRow1.length - 1 && styles.endRow
                               }`
@@ -394,7 +397,7 @@ const Customtable = ({
                               }`
                         }
                         onClick={() =>
-                          (tableType === "patients") && redirectToPatients(row)
+                          tableType === "patients" && redirectToPatients(row)
                         }
                       >
                         <Customrow
@@ -438,7 +441,8 @@ const Customtable = ({
                   style={{
                     display:
                       (activeBtns.edit || dataRow2.length) &&
-                      (tableType !== "patients" && tableType !== "mysavedcodes") 
+                      tableType !== "patients" &&
+                      tableType !== "mysavedcodes"
                         ? "table-row"
                         : "none",
                   }}
@@ -525,7 +529,8 @@ const Customtable = ({
                   style={{
                     display:
                       (activeBtns.edit || dataRow3.length > 0) &&
-                      (tableType !== "patients" && tableType !== "mysavedcodes") 
+                      tableType !== "patients" &&
+                      tableType !== "mysavedcodes"
                         ? "table-row"
                         : "none",
                   }}
@@ -612,11 +617,15 @@ const Customtable = ({
           </TableBody>
         </Table>
       </TableContainer>
-      {(tableType === "patients" && tableType==="mysavedcodes" ) && (
+      {(tableType === "patients" || tableType === "mysavedcodes") && (
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={allPatients.totalCount}
+          count={
+            tableType === "patients"
+              ? allPatients.totalCount
+              : tableType === "mysavedcodes" && mySavedCodes.totalCount
+          }
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

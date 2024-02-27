@@ -300,7 +300,7 @@ const Home = () => {
       <Typography
         variant="h6"
         sx={{ my: 2, paddingLeft: "15px", textAlign: "left",color: 'rgb(108,129,192)',
-        fontWeight: 600 }}
+        fontWeight: 600, fontSize: "1.5rem" }}
       >
         CODE FINDER
       </Typography>

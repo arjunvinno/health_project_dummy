@@ -14,7 +14,7 @@ const savedCodeShema = mongoose.Schema({
     enum: ["icd_10", "opcs-4", "ccsd"],
     required: true,
   },
-  fequency: {
+  frequency: {
     type: Number,
     default:0
   },

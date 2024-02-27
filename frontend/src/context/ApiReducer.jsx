@@ -1,9 +1,9 @@
 import * as types from "./actionType";
 import axios from "axios";
 
-const hostUrl = "http://localhost:8080";
+// const hostUrl = "http://localhost:8080";
 
-// const hostUrl ="https://health-project-dummy.onrender.com"
+const hostUrl ="https://health-project-dummy.onrender.com"
 
 export const apiReducer = (state, action) => {
   switch (action.type) {
@@ -55,7 +55,7 @@ export const apiReducer = (state, action) => {
       return newState;
     }
     // Saved codes
-    case types.addSavedCodes_loading:{
+    case types.addSavedCodes_loading: {
       let newState = { ...state };
       newState.mySavedCodes.loading = true;
       if (newState.mySavedCodes.error.message) {
@@ -73,8 +73,7 @@ export const apiReducer = (state, action) => {
       if (newState.mySavedCodes.error.message) {
         newState.mySavedCodes.error.message = "";
       }
-      newState.mySavedCodes.success.message =
-        "Saved code added successfully";
+      newState.mySavedCodes.success.message = "Saved code added successfully";
       return newState;
     }
 

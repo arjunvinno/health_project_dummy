@@ -40,12 +40,13 @@ const MySavedCodes = () => {
       subTitle: "",
       key: "type",
     },
+    {
+      title: "FREQUENCY",
+      subTitle: "",
+      key: "frequency",
+    },
   ];
-  const defaultDataKeys = [
-    "code",
-    "description",
-    "type",
-  ];
+  const defaultDataKeys = ["code", "description", "type", "frequency"];
   let navToBack = () => {
     navigate(-1);
   };

@@ -1,4 +1,4 @@
-const { savedCodeModel }= require("../models/my_saved_codes.model")
+const { savedCodeModel }= require("../models/my_saved_codes_model")
 
 
 const getSavedCodes = async (req,res) => {
