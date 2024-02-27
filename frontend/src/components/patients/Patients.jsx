@@ -135,7 +135,7 @@ const Patients = () => {
   }, [page, rowsPerPage]);
 
   useEffect(() => {
-    if (allPatients.loading) {
+    if (allPatients.loading ) {
       handleBackDropOpen();
     } else {
       if (allPatients.data.length > 0) {

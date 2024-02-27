@@ -1,5 +1,21 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { Box, ButtonGroup, Slide, Typography } from "@mui/material";
+import {
+  AppBar,
+  Box,
+  ButtonGroup,
+  CssBaseline,
+  Divider,
+  Drawer,
+  Grid,
+  IconButton,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  Slide,
+  Toolbar,
+  Typography,
+} from "@mui/material";
 import Button from "@mui/material/Button";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
@@ -21,10 +37,11 @@ import {
 import { ActionContext } from "../../context/ActionContext";
 import * as types from "../../context/actionType";
 import PatientFields from "../Patient-fields/PatientFields";
-import { fetchData } from "../../context/ApiReducer";
 import ConfirmModal from "../confirm-modal/ConfirmModal";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import ScrollToTop from "../ScrollToTop";
+import * as html2pdf from "html2pdf.js";
+import MenuIcon from "@mui/icons-material/Menu";
 
 const Home = () => {
   const [open, setOpen] = useState(false);
@@ -49,8 +66,10 @@ const Home = () => {
     setDataRow1,
     setDataRow2,
     setDataRow3,
+    datas: { patient },
   } = useContext(ActionContext);
   const containerRef = useRef(null);
+  const [currentPage, setCurrentPage] = useState("");
   const options = [
     { path: `/patients/${patientId}/procedure/NHS`, label: "Procedure (NHS)" },
     {
@@ -116,6 +135,7 @@ const Home = () => {
       setSearchSubHead("Primary diagnosis");
       setSearchUrl("store/icd10code");
       setSearchCode("ICD-10");
+      setCurrentPage("diagnosis");
     } else if (urlName[3] === "procedure") {
       setSearchHeader("Procedure coding");
       setSearchSubHead("Procedure");
@@ -123,9 +143,11 @@ const Home = () => {
       if (selectedIndex === 0) {
         setSearchUrl("store/opcscode");
         setSearchCode("OPCS-4");
+        setCurrentPage("procedure_nhs");
       } else {
         setSearchCode("CCSD");
         setSearchUrl("store/ccsdcode");
+        setCurrentPage("procedure_private");
       }
     }
   }, [location.pathname]);
@@ -217,11 +239,93 @@ const Home = () => {
     setOpen(false);
   };
 
+  let downloadHelloPage = () => {
+    let canvasDiv = document.getElementById("reportDowmload");
+
+    let HTML_Width = canvasDiv.offsetWidth;
+    let HTML_Height = canvasDiv.offsetHeight;
+    if (HTML_Width * HTML_Height >= 268435456) {
+      this.toasterService.warning("Content is too large");
+    }
+    // this.disableDowload = true;
+    // let url = window.location.href;
+    // let link = document.createElement("a");
+    // link.href = url;
+    // canvasDiv.appendChild(link)
+    // link.style.display='none'
+    // let title = document.querySelector(".title");
+
+    const pdfOptions = {
+      margin: 5,
+      filename: patient.data.firstName + "_" + currentPage + ".pdf",
+      image: { type: "jpeg", quality: 0.98 },
+      enableLinks: true,
+      pagebreak: { mode: ["avoid-all"] },
+      html2canvas: { scale: 2, useCORS: true },
+      jsPDF: { unit: "pt", format: [700, 842], orientation: "p" },
+    };
+
+    html2pdf()
+      .from(canvasDiv)
+      .set(pdfOptions)
+      .outputPdf()
+      .save()
+      .then((res) => {
+        // this.disableDowload = false;
+        // this.toasterService.success("Hello page downloaded successfully");
+        console.log(res);
+      })
+      .catch((error) => {
+        // this.disableDowload = false;
+        // this.toasterService.error("Failed to download");
+        // console.log(error);
+      });
+  };
+  const drawerWidth = 300;
+  const navItems = [
+    { title: "PATIENT LOOK UP", link: "/patients" },
+    { title: "MY SAVED CODES", link: "/mysavedcodes" },
+    { title: "CODES BY SPECIALITY", link: "/codespeciality" },
+    { title: "UNDERSTANDING CODING", link: "/understandingcoding" },
+  ];
+
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  const handleDrawerToggle = () => {
+    setMobileOpen((prevState) => !prevState);
+  };
+
+  const drawer = (
+    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
+      <Typography
+        variant="h6"
+        sx={{ my: 2, paddingLeft: "15px", textAlign: "left",color: 'rgb(108,129,192)',
+        fontWeight: 600 }}
+      >
+        CODE FINDER
+      </Typography>
+      <Divider />
+      <List>
+        {navItems.map((item) => (
+          <ListItem key={item.title} disablePadding className={styles.navItem}>
+            <Link to={item.link}>
+            <ListItemButton sx={{ textAlign: "left" ,textDecoration:"none"}}>
+              <ListItemText sx={{fontSize:'14px!important'}} primary={item.title} />
+            </ListItemButton></Link>
+            
+          </ListItem>
+        ))}
+      </List>
+    </Box>
+  );
+
+  const container =
+    window !== undefined ? () => window.document.body : undefined;
   return (
     <div style={{ position: "relative" }}>
       <ScrollToTop></ScrollToTop>
       <Container ref={containerRef} className={styles.container} maxWidth="xl">
-        <Typography
+        {/* <Typography
           variant="h4"
           sx={{
             fontWeight: 700,
@@ -230,8 +334,65 @@ const Home = () => {
             fontSize: "30px",
           }}
         >
-          CODING
-        </Typography>
+          CODE FINDER
+        </Typography> */}
+        <Box sx={{ display: "flex" }}>
+          <CssBaseline />
+          <AppBar
+            component="nav"
+            sx={{ backgroundColor: "rgb(108,129,192)!important" ,padding:'5px'}}
+            className={styles.navbarHeader}
+          >
+            <Toolbar>
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                edge="start"
+                onClick={handleDrawerToggle}
+                sx={{ mr: 2, display: { sm: "none" } }}
+              >
+                <MenuIcon />
+              </IconButton>
+  
+              <Typography
+                variant="h6"
+                component="div"
+                sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }} className={styles.header}
+              >
+                CODE FINDER
+              </Typography>
+              <Box sx={{ display: { xs: "none", sm: "block" } }}>
+                {navItems.map((item) => (
+                  <Link to={item.link}>
+                   <Button key={item.title} sx={{ color: "#fff" }}>
+                    {item.title}
+                  </Button></Link>
+                 
+                ))}
+              </Box>
+            </Toolbar>
+          </AppBar>
+          <nav>
+            <Drawer
+              container={container}
+              variant="temporary"
+              open={mobileOpen}
+              onClose={handleDrawerToggle}
+              ModalProps={{
+                keepMounted: true, // Better open performance on mobile.
+              }}
+              sx={{
+                display: { xs: "block", sm: "none" },
+                "& .MuiDrawer-paper": {
+                  boxSizing: "border-box",
+                  width: drawerWidth,
+                },
+              }}
+            >
+              {drawer}
+            </Drawer>
+          </nav>
+        </Box>
         <ConfirmModal
           open={confirmModalOpen}
           handleClose={handleCloseConfirmModal}
@@ -387,18 +548,31 @@ const Home = () => {
                 : true
             }
             variant={"contained"}
-            className={  (activeBtns.edit &&
-              (dataRow1.length > 0 ||
-                dataRow2.length > 0 ||
-                dataRow3.length > 0) &&
-              !checkAllSaved()) ||
-            !activeBtns.edit?styles.ediBtn_color_active:styles.ediBtn_color_onDisable}
+            className={
+              (activeBtns.edit &&
+                (dataRow1.length > 0 ||
+                  dataRow2.length > 0 ||
+                  dataRow3.length > 0) &&
+                !checkAllSaved()) ||
+              !activeBtns.edit
+                ? styles.ediBtn_color_active
+                : styles.ediBtn_color_onDisable
+            }
           >
             {activeBtns.edit ? "Complete" : "Edit"}
           </Button>
+          {!activeBtns.edit && (
+            <Button
+              onClick={downloadHelloPage}
+              variant={"contained"}
+              className={`${styles.ediBtn_color_active} ${styles.pdfActions}`}
+            >
+              Save as pdf
+            </Button>
+          )}
         </div>
       </Container>
-      <Box className={styles.footer}>
+      {/* <Box className={styles.footer}>
         <Link to="/understandingcoding">
           <Typography
             fontWeight={600}
@@ -411,7 +585,7 @@ const Home = () => {
             <ArrowRightAltIcon></ArrowRightAltIcon>
           </Typography>
         </Link>
-      </Box>
+      </Box> */}
     </div>
   );
 };

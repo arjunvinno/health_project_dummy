@@ -1,5 +1,6 @@
 import {
   Paper,
+  Skeleton,
   Slide,
   Table,
   TableBody,
@@ -10,7 +11,7 @@ import {
   TableRow,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import styles from "../table/Customtable.module.css";
 import { v4 as uuidv4 } from "uuid";
 import { ActionContext } from "../../context/ActionContext";
@@ -42,8 +43,10 @@ const Customtable = ({
     setDataRow3,
     apiDispatch,
     datas: { allPatients },
+    handleBackDropOpen,
+    handleBackDropClose,
   } = useContext(ActionContext);
-
+  let tableContainer = useRef(null);
   let [newTableHeaders, setnewTableHeaders] = useState([...tableHeaders]);
   const [tableKeys, setTableKeys] = useState(defaultDataKeys);
   const [expandedRow1, setExpandRow1] = useState(true);
@@ -78,7 +81,7 @@ const Customtable = ({
   ];
 
   useEffect(() => {
-    if (!activeBtns.edit && tableType !== "patients") {
+    if (!activeBtns.edit && (tableType !== "patients" && tableType!=='mysavedcodes')) {
       let newHeaders = [...newTableHeaders];
       let index = newHeaders.findIndex((header) => {
         return header.title === "ACTIONS";
@@ -93,7 +96,7 @@ const Customtable = ({
       setTableKeys(newKeys);
     } else if (activeBtns.edit) {
       setnewTableHeaders(tableHeaders);
-
+       console.log(tableHeaders)
       setTableKeys(defaultDataKeys);
     }
   }, [activeBtns.edit]);
@@ -224,7 +227,7 @@ const Customtable = ({
       <TableRow
         style={{
           display:
-            activeBtns.edit && tableType !== "patients" ? "table-row" : "none",
+            activeBtns.edit && (tableType !== "patients" && tableType!=='mysavedcodes') ? "table-row" : "none",
         }}
         sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
       >
@@ -302,20 +305,24 @@ const Customtable = ({
         borderRadius: "5px",
         backgroundColor: "white",
       }}
+     
     >
       <TableContainer
         component={Paper}
         sx={{
-          maxHeight: tableType !== "patients" ? 600 : "fit-content",
+          maxHeight: (tableType !== "patients" && tableType==='mysavedcodes')? 600 : "fit-content",
           boxShadow:
             "0px 0px 0px 0px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.0), 0px 0px 0px 0px rgba(0,0,0,0.12)",
         }}
+        ref={tableContainer}
       >
         <Table
           className={styles.tableCont}
           sx={{ minWidth: 650 }}
+          sm={{ minWidth: "87vw", maxWidth: "87vw" }}
           stickyHeader
           aria-label="sticky table"
+          id='reportDowmload'
         >
           <TableHead className="header">
             <TableRow className={styles.headerRow}>{setHeaders()}</TableRow>
@@ -328,7 +335,7 @@ const Customtable = ({
               setNoData()
             ) : (
               <>
-                {tableType !== "patients" && (
+                {(tableType !== "patients" && tableType !== "mysavedcodes") && (
                   <div style={{ height: "10px" }}></div>
                 )}
 
@@ -337,7 +344,7 @@ const Customtable = ({
                   style={{
                     display:
                       (activeBtns.edit || dataRow1.length) &&
-                      tableType !== "patients"
+                      (tableType !== "patients" && tableType !== "mysavedcodes") 
                         ? "table-row"
                         : "none",
                   }}
@@ -378,12 +385,16 @@ const Customtable = ({
                     >
                       <TableRow
                         className={
-                          tableType === "patients"
-                            ? `${styles.activeOnHover} ${i!==dataRow1.length-1 && styles.endRow}`
-                            : `${styles.tbodyInfoRow} ${i!==dataRow1.length-1 && styles.endRow}`
+                          (tableType === "patients")
+                            ? `${styles.activeOnHover} ${
+                                i !== dataRow1.length - 1 && styles.endRow
+                              }`
+                            : `${styles.tbodyInfoRow} ${
+                                i !== dataRow1.length - 1 && styles.endRow
+                              }`
                         }
                         onClick={() =>
-                          tableType === "patients" && redirectToPatients(row)
+                          (tableType === "patients") && redirectToPatients(row)
                         }
                       >
                         <Customrow
@@ -427,7 +438,7 @@ const Customtable = ({
                   style={{
                     display:
                       (activeBtns.edit || dataRow2.length) &&
-                      tableType !== "patients"
+                      (tableType !== "patients" && tableType !== "mysavedcodes") 
                         ? "table-row"
                         : "none",
                   }}
@@ -470,7 +481,9 @@ const Customtable = ({
                         sx={{
                           "&:last-child td, &:last-child th": { border: 0 },
                         }}
-                        className={`${styles.tbodyInfoRow} ${i!==dataRow2.length-1 && styles.endRow}`}
+                        className={`${styles.tbodyInfoRow} ${
+                          i !== dataRow2.length - 1 && styles.endRow
+                        }`}
                       >
                         <Customrow
                           defaultData={row}
@@ -512,7 +525,7 @@ const Customtable = ({
                   style={{
                     display:
                       (activeBtns.edit || dataRow3.length > 0) &&
-                      tableType !== "patients"
+                      (tableType !== "patients" && tableType !== "mysavedcodes") 
                         ? "table-row"
                         : "none",
                   }}
@@ -555,7 +568,9 @@ const Customtable = ({
                         sx={{
                           "&:last-child td, &:last-child th": { border: 0 },
                         }}
-                        className={`${styles.tbodyInfoRow} ${i!==dataRow3.length-1 && styles.endRow}`}
+                        className={`${styles.tbodyInfoRow} ${
+                          i !== dataRow3.length - 1 && styles.endRow
+                        }`}
                       >
                         <Customrow
                           defaultData={row}
@@ -597,7 +612,7 @@ const Customtable = ({
           </TableBody>
         </Table>
       </TableContainer>
-      {tableType === "patients" && (
+      {(tableType === "patients" && tableType==="mysavedcodes" ) && (
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"

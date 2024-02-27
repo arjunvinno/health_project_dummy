@@ -1,9 +1,9 @@
 import * as types from "./actionType";
 import axios from "axios";
 
-const baseUrl = "http://localhost:8080";
+const hostUrl = "http://localhost:8080";
 
-const hostUrl ="https://health-project-dummy.onrender.com"
+// const hostUrl ="https://health-project-dummy.onrender.com"
 
 export const apiReducer = (state, action) => {
   switch (action.type) {
@@ -54,7 +54,72 @@ export const apiReducer = (state, action) => {
       newState.codes.success.message = "";
       return newState;
     }
+    // Saved codes
+    case types.addSavedCodes_loading:{
+      let newState = { ...state };
+      newState.mySavedCodes.loading = true;
+      if (newState.mySavedCodes.error.message) {
+        newState.mySavedCodes.error.message = "";
+      }
+      if (newState.mySavedCodes.success.message) {
+        newState.mySavedCodes.success.message = "";
+      }
+      return newState;
+    }
+    case types.addSavedCodes: {
+      let newState = { ...state };
+      newState.mySavedCodes.loading = false;
+      // newState.diagnosticsOnId.data = action.payload.data;
+      if (newState.mySavedCodes.error.message) {
+        newState.mySavedCodes.error.message = "";
+      }
+      newState.mySavedCodes.success.message =
+        "Saved code added successfully";
+      return newState;
+    }
 
+    case types.addSavedCodes_error: {
+      let newState = { ...state };
+      newState.mySavedCodes.loading = false;
+      newState.mySavedCodes.error.message = action.payload;
+      if (newState.mySavedCodes.success.message) {
+        newState.mySavedCodes.success.message = "";
+      }
+      return newState;
+    }
+
+    case types.getSavedCodes_loading: {
+      let newState = { ...state };
+      newState.mySavedCodes.loading = true;
+      if (newState.mySavedCodes.error.message) {
+        newState.mySavedCodes.error.message = "";
+      }
+      if (newState.mySavedCodes.success.message) {
+        newState.mySavedCodes.success.message = "";
+      }
+      return newState;
+    }
+
+    case types.getSavedCodes: {
+      let newState = { ...state };
+      newState.mySavedCodes.loading = false;
+      newState.mySavedCodes.data = action.payload.data;
+      newState.mySavedCodes.totalCount = action.payload.totalCount;
+      if (newState.mySavedCodes.error.message) {
+        newState.mySavedCodes.error.message = "";
+      }
+      return newState;
+    }
+
+    case types.getSavedCodes_error: {
+      let newState = { ...state };
+      newState.mySavedCodes.loading = false;
+      if (newState.mySavedCodes.success.message) {
+        newState.mySavedCodes.success.message = "";
+      }
+      newState.mySavedCodes.error.message = action.payload;
+      return newState;
+    }
     //  DiagnosticsCases
     case types.AddDiagnostics_OnPatientId_Loading: {
       let newState = { ...state };

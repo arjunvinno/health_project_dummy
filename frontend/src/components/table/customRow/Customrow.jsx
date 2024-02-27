@@ -3,6 +3,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {
+  FormControl,
   Popover,
   TableCell,
   TextField,
@@ -103,6 +104,7 @@ const Customrow = ({
     if (validateForm()) {
       (async () => {
         let body;
+        let savedCodeBody;
         if (tableType === "diagnosis") {
           body = {
             date: data[index].date,
@@ -114,7 +116,7 @@ const Customrow = ({
             filter: filter,
             user_id: patientId,
           };
-
+          savedCodeBody={code: data[index].icd_10, description: data[index].description,type:'icd_10'}
           !body.snomed_code && delete body.snomed_code;
         } else if (tableType === "procedure") {
           body = {
@@ -127,6 +129,7 @@ const Customrow = ({
             user_id: patientId,
             procedure_type: privateCheck ? "private" : "nhs",
           };
+          savedCodeBody={code: data[index].code, description: data[index].description,type: privateCheck ? "ccsd" : "opcs-4"}
         }
 
         if (!data[index]._id) {
@@ -186,6 +189,17 @@ const Customrow = ({
             body
           );
         }
+
+        await saveData(
+          apiDispatch,
+          {
+            loading:types.addSavedCodes_loading,
+            dataType:types.addSavedCodes,
+            error: types.addSavedCodes_error,
+          },
+         "mysavedcodes",
+         savedCodeBody
+        );
       })();
       setEdit(false);
       let newData = [...data];
@@ -205,7 +219,7 @@ const Customrow = ({
 
   const handlePopoverOpen = (event) => {
     let key = event.currentTarget.getAttribute("data-key");
-    if (key === "description" || key === "comments") {
+    if (key === "description" || key === "comments" || key === "signer") {
       setAnchorEl(event.currentTarget);
     } else {
       setAnchorEl(null);
@@ -222,7 +236,7 @@ const Customrow = ({
     let keysData = tableKeys;
     return keysData.map((key, i) => {
       let field;
-      let codes = ["code", "icd_10", "status"];
+      let codes = ["code", "icd_10"];
       if (edit) {
       }
       if (codes.includes(key) && edit && activeBtns.edit) {
@@ -231,16 +245,18 @@ const Customrow = ({
             <label htmlFor="">
               {tableHeaders.find((el) => el.key === key).title} :
             </label>{" "}
-            <TextField
-              variant="standard"
-              label={data[index][key] ? "" : "code"}
-              fullWidth
-              value={data[index][key]}
-              className={data[index][key] ? styles.alignSelect : ""}
-              onChange={(e) => handleChange(e, index, key, data, setFunction)}
-              error={!!errors[key]}
-              helperText={errors[key]}
-            ></TextField>
+            <FormControl fullWidth variant="standard">
+              <TextField
+                variant="standard"
+                label={data[index][key] ? "" : "code"}
+                fullWidth
+                value={data[index][key]}
+                className={data[index][key] ? styles.alignSelect : ""}
+                onChange={(e) => handleChange(e, index, key, data, setFunction)}
+                error={!!errors[key]}
+                helperText={errors[key]}
+              ></TextField>
+            </FormControl>
           </TableCell>
         );
       } else if (
@@ -249,37 +265,46 @@ const Customrow = ({
         activeBtns.edit
       ) {
         field = (
-          <TableCell key={i} align="left" className={styles.tInfoTdOnEdit}>
+          <TableCell
+            key={i}
+            align="left"
+            className={`${styles.tInfoTdOnEdit} ${
+              key === "description" ? styles.descriptionField : styles.comments
+            }`}
+          >
             <label htmlFor="">
               {tableHeaders.find((el) => el.key === key).title} :
             </label>
-            <TextField
-              variant="standard"
-              multiline
-              label={
-                key === "description"
-                  ? data[index][key]
+            <FormControl variant="standard" fullWidth>
+              <TextField
+                variant="standard"
+                multiline
+                label={
+                  key === "description"
+                    ? data[index][key]
+                      ? ""
+                      : "description"
+                    : data[index][key]
                     ? ""
-                    : "description"
-                  : data[index][key]
-                  ? ""
-                  : "comments"
-              }
-              minRows={1}
-              fullWidth
-              maxRows={3}
-              value={data[index][key]}
-              style={{
-                minWidth:
-                  tableType === "diagnosis"
-                    ? "90px"
-                    : tableType === "procedure" && "130px",
-              }}
-              className={data[index][key] ? styles.alignSelect : ""}
-              onChange={(e) => handleChange(e, index, key, data, setFunction)}
-              error={!!errors[key]}
-              helperText={errors[key]}
-            ></TextField>
+                    : "comments"
+                }
+                minRows={1}
+                fullWidth
+                maxRows={3}
+                value={data[index][key]}
+                style={{
+                  minWidth:
+                    tableType === "diagnosis"
+                      ? "90px"
+                      : tableType === "procedure" && "130px",
+                  width: "100%",
+                }}
+                className={data[index][key] ? styles.alignSelect : ""}
+                onChange={(e) => handleChange(e, index, key, data, setFunction)}
+                error={!!errors[key]}
+                helperText={errors[key]}
+              ></TextField>
+            </FormControl>
           </TableCell>
         );
       } else if (key === "date" && edit && activeBtns.edit) {
@@ -294,20 +319,22 @@ const Customrow = ({
             <label htmlFor="">
               {tableHeaders.find((el) => el.key === key).title} :
             </label>
-            <TextField
-              fullWidth
-              value={formatedDate}
-              onChange={(e) => handleChange(e, index, key, data, setFunction)}
-              className={
-                tableType === "diagnosis"
-                  ? styles.dateFieldDiagnosis
-                  : tableType === "procedure" && styles.dateFieldProcedure
-              }
-              variant="standard"
-              type="date"
-              error={!!errors[key]}
-              helperText={errors[key]}
-            ></TextField>
+            <FormControl variant="standard" fullWidth>
+              <TextField
+                fullWidth
+                value={formatedDate}
+                onChange={(e) => handleChange(e, index, key, data, setFunction)}
+                className={
+                  tableType === "diagnosis"
+                    ? styles.dateFieldDiagnosis
+                    : tableType === "procedure" && styles.dateFieldProcedure
+                }
+                variant="standard"
+                type="date"
+                error={!!errors[key]}
+                helperText={errors[key]}
+              ></TextField>
+            </FormControl>
           </TableCell>
         );
       } else if (
@@ -316,30 +343,36 @@ const Customrow = ({
         activeBtns.edit
       ) {
         field = (
-          <TableCell key={i} align="left" className={styles.tInfoTdOnEdit}>
+          <TableCell
+            key={i}
+            align="left"
+            className={`${styles.tInfoTdOnEdit} ${styles.signer}`}
+          >
             <label htmlFor="">
               {tableHeaders.find((el) => el.key === key).title} :
             </label>
-            <TextField
-              variant="standard"
-              fullWidth
-              label={
-                key === "signer"
-                  ? data[index][key]
+            <FormControl variant="standard" fullWidth>
+              <TextField
+                variant="standard"
+                fullWidth
+                label={
+                  key === "signer"
+                    ? data[index][key]
+                      ? ""
+                      : "signer"
+                    : data[index][key]
                     ? ""
-                    : "signer"
-                  : data[index][key]
-                  ? ""
-                  : "snomed code"
-              }
-              type="text"
-              value={data[index][key]}
-              onChange={(e) => handleChange(e, index, key, data, setFunction)}
-              className={data[index][key] ? styles.alignSelect : ""}
-              // style={{ maxWidth: "8rem" }}
-              error={!!errors[key]}
-              helperText={errors[key]}
-            ></TextField>
+                    : "snomed code"
+                }
+                type="text"
+                value={data[index][key]}
+                onChange={(e) => handleChange(e, index, key, data, setFunction)}
+                className={data[index][key] ? styles.alignSelect : ""}
+                // style={{ maxWidth: "8rem" }}
+                error={!!errors[key]}
+                helperText={errors[key]}
+              ></TextField>
+            </FormControl>
           </TableCell>
         );
       } else if (key === "actions") {
@@ -348,7 +381,7 @@ const Customrow = ({
             align="center"
             key={i}
             style={{ verticalAlign: edit ? "inherit" : "midddle" }}
-            className={`${styles.tInfoTd} ${edit &&styles.font_600}`}
+            className={`${styles.tInfoTd} ${edit && styles.font_600}`}
           >
             <label htmlFor="">{key.toUpperCase()} :</label>
             <div className={edit ? styles.actionOnEdit : styles.actions}>
@@ -418,9 +451,12 @@ const Customrow = ({
           field = (
             <TableCell
               className={
-                key === "comments" || key === "description"
-                  ? styles.detailsField
-                  : codes.includes(key)
+                key === "comments"
+                  ? styles.comments
+                  : key === "description"
+                  ? styles.descriptionField
+                  : // ? styles.detailsField
+                  codes.includes(key)
                   ? styles.codeClass
                   : styles.tInfoTd
               }
@@ -428,13 +464,12 @@ const Customrow = ({
               align="left"
             >
               <label htmlFor="">
-                {tableHeaders.find((el) => el.key === key).title} :
+                {tableHeaders.find((el) => el.key === key)?.title} :
               </label>{" "}
               <p
                 ref={paragraphRef}
                 aria-owns={openPopOver ? "mouse-over-popover" : undefined}
                 aria-haspopup="true"
-                container={true}
                 onMouseEnter={handlePopoverOpen}
                 onMouseLeave={handlePopoverClose}
                 data-key={key}
@@ -444,7 +479,11 @@ const Customrow = ({
                   margin: "0px",
                 }}
                 className={
-                  key === "comments" || key === "description" ? styles.info : ""
+                  key === "comments" ||
+                  key === "description" ||
+                  key === "signer"
+                    ? styles.info
+                    : ""
                 }
               >
                 {tableType === "patients" && key === "firstName"
@@ -455,7 +494,9 @@ const Customrow = ({
                   ? row[key]
                   : "N/A"}
               </p>
-              {(key === "comments" || key === "description") && (
+              {(key === "comments" ||
+                key === "description" ||
+                key === "signer") && (
                 <Popover
                   id="mouse-over-popover"
                   sx={{

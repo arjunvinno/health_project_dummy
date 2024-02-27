@@ -73,15 +73,15 @@ const SearchResults = ({ setSearchTerm,searchResults, setSearchResults ,searchRe
     >
       {searchResults.length > 0 &&
         searchResults.map((result, index) => (
-          <Tooltip
-            title={result.description}
-            placement="top"
-            arrow
-            disableInteractive
-            PopperProps={{ disablePortal: true }}
-            key={index}
-            sx={{ fontSize: "40px!important" }}
-          >
+          // <Tooltip
+          //   title={result.description}
+          //   placement="top"
+          //   arrow
+          //   disableInteractive
+          //   PopperProps={{ disablePortal: true }}
+          //   key={index}
+          //   sx={{ fontSize: "40px!important" }}
+          // >
             <p
               style={{ background: "white" }}
               key={index}
@@ -93,7 +93,7 @@ const SearchResults = ({ setSearchTerm,searchResults, setSearchResults ,searchRe
             >
               {result.description}
             </p>
-          </Tooltip>
+          /* </Tooltip> */
         ))}
     </div>
   );

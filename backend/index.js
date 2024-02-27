@@ -7,6 +7,7 @@ const { patientRouter } = require("./routes/patients_route");
 const { diagnosticRouter } = require("./routes/diagnostic_route");
 const { procedureRouter } = require("./routes/procedure_route");
 const { storeToDBRouter } = require("./routes/store_db_route");
+const { savedCodeRouter } = require("./routes/savedcodes_route");
 
 const app = express();
 app.use(cors());
@@ -19,6 +20,7 @@ app.get("/", (req, res) => {
 app.use("", patientRouter);
 app.use("", diagnosticRouter);
 app.use("", procedureRouter);
+app.use("",savedCodeRouter)
 app.use("/store", storeToDBRouter);
 
 const PORT = process.env.PORT || 8080;

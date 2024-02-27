@@ -21,7 +21,7 @@ td {
 
 .alignSelect {
   margin-top: 16px !important;
-  max-width: 8rem !important;
+  max-width: 100% !important;
 }
 .editIcon,
 .saveIcon {
@@ -46,6 +46,33 @@ td {
   white-space: nowrap;
   text-overflow: ellipsis;
   width: 90%;
+  overflow: hidden;
+}
+.descriptionField {
+  max-width: 22vw;
+  overflow: hidden;
+  min-width: 20vw;
+}
+.signer {
+  max-width: 8rem;
+}
+.descriptionField > p {
+  margin: 0px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 100%;
+  overflow: hidden;
+}
+.comments {
+  max-width: 15vw;
+  overflow: hidden;
+  min-width: 12vw;
+}
+.comments > p {
+  margin: 0px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 100%;
   overflow: hidden;
 }
 
@@ -79,14 +106,28 @@ td {
   max-width: 15vw !important;
   word-wrap: break-word;
   word-break: break-all;
+  white-space: wrap;
+  overflow-wrap: break-word;
 }
 .info {
   width: "inherit";
 }
 .tInfoTd > label,
 .detailsField > label,
+.comments > label,
+.descriptionField > label,
 .codeClass > label {
   display: none;
+}
+.tInfoTd {
+  max-width: 8rem;
+}
+.tInfoTd > p {
+  margin: 0px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 100%;
+  overflow: hidden;
 }
 @media screen and (max-width: 834px) {
   .detailsField > p {
@@ -95,6 +136,27 @@ td {
     text-overflow: ellipsis;
     width: 8rem;
     overflow: hidden;
+  }
+  .descriptionField > p {
+    margin: 0px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100%;
+    overflow: hidden;
+  }
+  .comments > p {
+    margin: 0px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100%;
+    overflow: hidden;
+  }
+  .comments {
+    min-width: 0px;
+    max-width: 13vw;
+  }
+  .detailsField {
+    max-width: 20vw;
   }
   .dateFieldDiagnosis {
     width: 6.3rem !important;
@@ -108,6 +170,24 @@ td {
   .info {
     width: 7rem;
   }
+
+  .alignSelect {
+    margin-top: 16px !important;
+    /* max-width: 8rem !important; */
+  }
+  .signer {
+    max-width: 5rem;
+  }
+  .tInfoTd {
+    max-width: 5rem;
+  }
+  .tInfoTd > p {
+    margin: 0px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100%;
+    overflow: hidden;
+  }
 }
 .defaultClass {
   max-width: 8rem !important;
@@ -115,26 +195,40 @@ td {
 .tInfoTdOnEdit > label {
   display: none;
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 686px) {
   .tInfoTd > label,
   .detailsField > label,
-  .codeClass > label {
+  .codeClass > label,
+  .descriptionField > label,
+  .comments > label {
     display: inline;
     margin-right: 15px;
     font-weight: 500;
     white-space: nowrap;
   }
-  .tInfoTd,
-  .detailsField,
+
   .codeClass {
-    max-width: 79vw !important;
     width: 100% !important;
     display: flex !important;
     align-items: center;
     flex-wrap: wrap;
+    box-sizing: border-box;
+  }
+  .tInfoTd,
+  .detailsField,
+  .descriptionField,
+  .comments {
+    width: 100% !important;
+    display: flex !important;
+    align-items: center;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+    max-width: calc(100vw - 48px);
   }
   .tInfoTd > p,
   .detailsField > p,
+  .descriptionField > p,
+  .comments > p,
   .codeClass > p {
     width: 50%;
   }
@@ -144,7 +238,8 @@ td {
     white-space: nowrap;
   }
   .tInfoTdOnEdit {
-    max-width: 79vw !important;
+    max-width: 87vw !important;
+    box-sizing: border-box;
   }
   .dateFieldProcedure {
     width: 100% !important;
@@ -160,10 +255,9 @@ td {
     top: 0px;
   }
   .popUp {
-    max-width: 100%!important;
+    max-width: 100% !important;
   }
-  .font_600>label{
+  .font_600 > label {
     font-weight: 600;
   }
-
 }

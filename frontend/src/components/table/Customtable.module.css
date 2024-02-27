@@ -89,7 +89,7 @@ td {
 }
 
 .onNotEdit {
-  width: 13rem !important;
+  width: 13vw !important;
   cursor: pointer !important;
 }
 .onEditNotActiveDia {
@@ -115,7 +115,7 @@ td {
     width: 7rem !important;
   }
   .onEditNotActiveDia {
-    width: 6rem !important;
+    width: 9rem !important;
   }
 
   .onEditNotActiveProce {
@@ -129,7 +129,7 @@ td {
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 686px) {
   thead {
     display: none !important;
   }
@@ -137,12 +137,7 @@ td {
     display: flex !important;
     flex-direction: column;
   }
-  /* .tbodyInfoRow > td:last-child {
-    border-bottom:3px solid #D9DCF3 !important;
-  }
-  .activeOnHover > td:last-child {
-    border-bottom:3px solid #D9DCF3 !important;
-  } */
+ 
   .emptyCells {
     display: none !important;
   }
@@ -150,9 +145,20 @@ td {
     display: none !important;
   }
   .tableCont {
-    min-width: 80vw !important;
+    min-width: 0% !important;
+    max-width: 100% !important;
   }
-  .endRow> td:last-child {
-    border-bottom:3px solid #D9DCF3 !important;
+  .endRow > td:last-child {
+    border-bottom: 3px solid #d9dcf3 !important;
   }
+ 
+  .onNotEdit,
+  .onEditNotActiveDia,
+  .onEditNotActiveProce,
+  .onEditNotActive,
+  .onNotEdit {
+    width: 5rem !important;
+    max-width: 5rem !important;
+  }
+ 
 }

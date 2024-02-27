@@ -211,7 +211,7 @@ const PatientFields = () => {
         severity={alertData.severity}
         message={alertData.message}
       ></AlertPopUp>
-      <Box className="actions">
+      {/* <Box className="actions">
         {" "}
         <Button
           variant="contained"
@@ -220,7 +220,7 @@ const PatientFields = () => {
         >
           Patient look up
         </Button>{" "}
-      </Box>
+      </Box> */}
       <div className="form">
         <div className="actionBtns">
           {edit ? (

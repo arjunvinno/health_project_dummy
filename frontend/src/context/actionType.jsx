@@ -11,6 +11,20 @@ export const getCodes = "GET_ALL_PROCEDURES";
 export const getCodes_error = "GET_ALL_PROCEDURES_ERROR";
 
 export const clearSearchData = "CLEAR_SEARCH_DATA";
+
+// Saved codes
+export const getSavedCodes_loading = "GET_ALL_SAVEDCODES_LOADING"
+
+export const getSavedCodes="GET_ALL_SAVEDCODES"
+
+export const getSavedCodes_error = "GET_ALL_SAVEDCODES_ERROR";
+
+export const addSavedCodes_loading = "ADD_ALL_SAVEDCODES_LOADING"
+
+export const addSavedCodes="ADD_ALL_SAVEDCODES"
+
+export const addSavedCodes_error = "ADD_ALL_SAVEDCODES_ERROR";
+
 // Diagnosis types
 
 export const AddDiagnostics_OnPatientId_Loading =

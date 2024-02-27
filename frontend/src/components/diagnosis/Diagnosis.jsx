@@ -46,11 +46,11 @@ const Diagnosis = () => {
       subTitle: "",
       key: "comments",
     },
-    {
-      title: "SNOMED CODE",
-      subTitle: "",
-      key: "snomed_code",
-    },
+    // {
+    //   title: "SNOMED CODE",
+    //   subTitle: "",
+    //   key: "snomed_code",
+    // },
 
     {
       title: "DATE",
@@ -73,7 +73,7 @@ const Diagnosis = () => {
     "icd_10",
     "description",
     "comments",
-    "snomed_code",
+    // "snomed_code",
     "date",
     "signer",
     "actions",

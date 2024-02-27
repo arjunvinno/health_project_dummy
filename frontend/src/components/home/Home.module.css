@@ -1,5 +1,21 @@
 .container {
   padding: 2rem 0px;
+  padding-top: 5rem;
+}
+
+.navBar {
+  background-color: #305ec9;
+  color: white;
+}
+.navbarHeader {
+}
+.navItem > a {
+  text-decoration: none;
+  color: black;
+}
+.navItem > a > div > div > span {
+  font-size: 14px;
+  font-weight: 500;
 }
 .popOver0 {
   left: 0px !important;
@@ -32,6 +48,11 @@
 .actionBtns {
   margin-top: 2rem;
   margin-bottom: 2rem;
+  display: flex;
+  justify-content: start;
+}
+.pdfActions {
+  margin-left: 15px !important;
 }
 .ediBtn_color {
   color: #3e5282 !important;
@@ -45,10 +66,10 @@
 .ediBtn_color_active {
   background-color: #3e5282 !important;
 }
-.ediBtn_color_onDisable{
+.ediBtn_color_onDisable {
   background-color: #3e5282 !important;
   opacity: 0.5;
-  color: white!important;
+  color: white !important;
 }
 .diagnosisBtn {
   width: 14rem;
@@ -97,12 +118,40 @@
 .slectionText {
   font-weight: 500;
 }
+
+.header{
+  font-size: 1.5rem!important;
+}
+
+@media screen and (max-width: 904px) {
+  .navbarHeader > div:first-child {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+  }
+  .header{
+  padding-left: 7px;
+  }
+}
 @media screen and (min-width: 600px) {
   .container,
   .footer {
     padding-left: 10px !important;
     padding-right: 10px !important;
   }
+ 
+}
+@media screen and (max-width:600px) {
+  .navbarHeader > div:first-child {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .header{
+    padding-left: 0px;
+    display: block!important;
+    }
+
 }
 
 @media screen and (max-width: 425px) {

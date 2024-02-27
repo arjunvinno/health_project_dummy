@@ -74,6 +74,15 @@ const getAllPatientsQueryValidator = {
     }),
   },
 };
+
+const getSavedCodesValidator ={
+  validate: {
+    query: Joi.object({
+      page: Joi.string().required(),
+      limit: Joi.string().required(),
+    }),
+  },
+}
 const patientParamsValidator = {
   validate: {
     params: Joi.object({
@@ -148,6 +157,18 @@ const addProcedureValidator = {
   },
 };
 
+const addSavedCodeValidator = {
+  validate: {
+    payload: Joi.object({
+      code: Joi.string().required(),
+      description: Joi.string().required(),
+      type: Joi.string()
+        .required()
+        .valid("icd_10", "opcs-4", "ccsd"),
+    }),
+  },
+}
+
 module.exports = {
   signupValidatorOptions,
   passwordValidationOptions,
@@ -158,4 +179,6 @@ module.exports = {
   patientParamsValidator,
   reportsParamsValidator,
   reportsOnfilterValidator,
+  addSavedCodeValidator,
+  getSavedCodesValidator
 };

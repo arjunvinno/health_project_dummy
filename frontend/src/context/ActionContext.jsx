@@ -40,6 +40,17 @@ export const ActionProvider = ({ children }) => {
         message: "",
       },
     },
+    mySavedCodes:{
+      loading: false,
+      data: [],
+      totalCount: 0,
+      error: {
+        message: "",
+      },
+      success: {
+        message: "",
+      },
+    },
     allPatients: {
       loading: false,
       data: [],

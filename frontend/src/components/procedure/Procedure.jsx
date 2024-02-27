@@ -76,6 +76,17 @@ const Procedure = () => {
       setPrivate(false);
     }
 
+  
+  }, [location.pathname]);
+
+  useEffect(() => {
+    let newTableHeaders = [...tableHeaders];
+    if (privateCheck) {
+      newTableHeaders[0].title = "CCSD";
+    } else {
+      newTableHeaders[0].title = "OPCS-4";
+    }
+    setTableHeaders(newTableHeaders);
     (async () => {
       await fetchData(
         apiDispatch,
@@ -109,16 +120,6 @@ const Procedure = () => {
       setDataRow3([]);
       apiDispatch({ type: types.clearSearchData });
     };
-  }, [location.pathname]);
-
-  useEffect(() => {
-    let newTableHeaders = [...tableHeaders];
-    if (privateCheck) {
-      newTableHeaders[0].title = "CCSD";
-    } else {
-      newTableHeaders[0].title = "OPCS-4";
-    }
-    setTableHeaders(newTableHeaders);
   }, [privateCheck]);
 
   let defaultprocedureDataKeys = [
@@ -161,7 +162,6 @@ const Procedure = () => {
   }
 
   useEffect(() => {
-    console.log(codes.loading)
     if (proceduresOnId.loading ||codes.loading) {
       handleBackDropOpen();
     } else {
