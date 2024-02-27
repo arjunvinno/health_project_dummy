@@ -32,20 +32,28 @@ const Customtable = ({
   rowsPerPage,
   setRowsPerPage,
   initialTableData,
+  dataRow1,
+  setDataRow1,
+  dataRow2,
+  setDataRow2,
+  dataRow3,
+  setDataRow3,
+  activeBtns
 }) => {
-  const {
-    activeBtns,
-    dataRow1,
-    setDataRow1,
-    dataRow2,
-    setDataRow2,
-    dataRow3,
-    setDataRow3,
-    apiDispatch,
-    datas: { allPatients, mySavedCodes },
-    handleBackDropOpen,
-    handleBackDropClose,
-  } = useContext(ActionContext);
+
+  // const {
+  //   // activeBtns,
+  //   // dataRow1,
+  //   // setDataRow1,
+  //   // dataRow2,
+  //   // setDataRow2,
+  //   // dataRow3,
+  //   // setDataRow3,
+  //   apiDispatch,
+  //   datas: { allPatients, mySavedCodes },
+  // } = useContext(ActionContext);
+  const { apiDispatch = () => {}, datas = {} } = useContext(ActionContext) || {};
+  const { allPatients = { totalCount: 0 }, mySavedCodes = { totalCount: 0 } } = datas;
   let tableContainer = useRef(null);
   let [newTableHeaders, setnewTableHeaders] = useState([...tableHeaders]);
   const [tableKeys, setTableKeys] = useState(defaultDataKeys);
@@ -81,7 +89,11 @@ const Customtable = ({
   ];
 
   useEffect(() => {
-    if (!activeBtns.edit && (tableType !== "patients" && tableType!=='mysavedcodes')) {
+    if (
+      !activeBtns.edit &&
+      tableType !== "patients" &&
+      tableType !== "mysavedcodes"
+    ) {
       let newHeaders = [...newTableHeaders];
       let index = newHeaders.findIndex((header) => {
         return header.title === "ACTIONS";
@@ -96,7 +108,7 @@ const Customtable = ({
       setTableKeys(newKeys);
     } else if (activeBtns.edit) {
       setnewTableHeaders(tableHeaders);
-       console.log(tableHeaders)
+      console.log(tableHeaders);
       setTableKeys(defaultDataKeys);
     }
   }, [activeBtns.edit]);
@@ -227,7 +239,11 @@ const Customtable = ({
       <TableRow
         style={{
           display:
-            activeBtns.edit && (tableType !== "patients" && tableType!=='mysavedcodes') ? "table-row" : "none",
+            activeBtns.edit &&
+            tableType !== "patients" &&
+            tableType !== "mysavedcodes"
+              ? "table-row"
+              : "none",
         }}
         sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
       >
@@ -324,7 +340,6 @@ const Customtable = ({
           sm={{ minWidth: "87vw", maxWidth: "87vw" }}
           stickyHeader
           aria-label="sticky table"
-          id="reportDowmload"
         >
           <TableHead className="header">
             <TableRow className={styles.headerRow}>{setHeaders()}</TableRow>
@@ -422,6 +437,9 @@ const Customtable = ({
                           errors={errors}
                           setErrors={setErrors}
                           tableHeaders={newTableHeaders}
+                          dataRow1={dataRow1}
+                          dataRow2={dataRow2}
+                          dataRow3={dataRow3}
                         ></Customrow>
                       </TableRow>
                     </Slide>
@@ -510,6 +528,9 @@ const Customtable = ({
                           errors={errors}
                           setErrors={setErrors}
                           tableHeaders={newTableHeaders}
+                          dataRow1={dataRow1}
+                          dataRow2={dataRow2}
+                          dataRow3={dataRow3}
                         ></Customrow>
                       </TableRow>
                     </Slide>
@@ -599,6 +620,9 @@ const Customtable = ({
                           errors={errors}
                           setErrors={setErrors}
                           tableHeaders={newTableHeaders}
+                          dataRow1={dataRow1}
+                          dataRow2={dataRow2}
+                          dataRow3={dataRow3}
                         ></Customrow>
                       </TableRow>
                     </Slide>

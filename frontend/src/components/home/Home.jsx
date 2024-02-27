@@ -42,10 +42,12 @@ import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import ScrollToTop from "../ScrollToTop";
 import * as html2pdf from "html2pdf.js";
 import MenuIcon from "@mui/icons-material/Menu";
+import PreviewPdf from "../previewPdf/PreviewPdf";
 
 const Home = () => {
   const [open, setOpen] = useState(false);
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
+  const [pdfModalOpen, setPdfModalOpen] = useState(false);
   const anchorRef = useRef(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const navigate = useNavigate();
@@ -84,6 +86,14 @@ const Home = () => {
 
   const handleClickConfirmModalOpen = () => {
     setConfirmModalOpen(true);
+  };
+
+  const handleClosePdfModal = () => {
+    setPdfModalOpen(false);
+  };
+
+  const handleClickPdfModalOpen = () => {
+    setPdfModalOpen(true);
   };
 
   function onEdit() {
@@ -401,6 +411,7 @@ const Home = () => {
           }
           onDiscard={onDiscard}
         ></ConfirmModal>
+        <PreviewPdf open={pdfModalOpen} handleClose={handleClosePdfModal}></PreviewPdf>
         <Box>
           <Button></Button>
         </Box>
@@ -563,7 +574,7 @@ const Home = () => {
           </Button>
           {!activeBtns.edit && (
             <Button
-              onClick={downloadHelloPage}
+              onClick={handleClickPdfModalOpen}
               variant={"contained"}
               className={`${styles.ediBtn_color_active} ${styles.pdfActions}`}
             >

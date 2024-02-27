@@ -58,6 +58,11 @@ const Patients = () => {
     handleBackDropOpen,
     handleBackDropClose,
     handleAlertOpen,
+    dataRow1,
+    dataRow2,
+    dataRow3,
+    setDataRow2,
+    setDataRow3
   } = useContext(ActionContext);
 
   const today = dayjs();
@@ -457,6 +462,12 @@ const Patients = () => {
           rowsPerPage={rowsPerPage}
           setRowsPerPage={setRowsPerPage}
           initialTableData={{ tableRow1: [], tableRow2: [], tableRow3: [] }}
+          setDataRow1={setDataRow1}
+          dataRow1={dataRow1}
+          dataRow2={dataRow2}
+          dataRow3={dataRow3}
+          setDataRow2={setDataRow2}
+          setDataRow3={setDataRow3}
         ></Customtable>
       </Container>
     </div>

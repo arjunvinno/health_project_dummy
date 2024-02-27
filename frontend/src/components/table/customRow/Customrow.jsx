@@ -34,13 +34,15 @@ const Customrow = ({
   errors,
   setErrors,
   tableHeaders,
+  dataRow1, dataRow2, dataRow3 
 }) => {
   const [edit, setEdit] = useState(data[index].edit ? data[index].edit : false);
   const [open, setOpen] = React.useState(false);
   const { patientId } = useParams();
   const paragraphRef = React.useRef(null);
-  const { dataRow1, dataRow2, dataRow3 } = useContext(ActionContext);
+  // const { dataRow1, dataRow2, dataRow3 } = useContext(ActionContext);
   const { apiDispatch } = useContext(ActionContext);
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -215,7 +217,6 @@ const Customrow = ({
     const day = ("0" + date.getDate()).slice(-2);
     return `${year}-${month}-${day}`;
   }
-  const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handlePopoverOpen = (event) => {
     let key = event.currentTarget.getAttribute("data-key");

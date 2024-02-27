@@ -12,6 +12,7 @@ import { ActionContext } from "../../../context/ActionContext";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { useTheme } from "@emotion/react";
+import { hostUrl } from "../../../context/ApiReducer";
 
 const SearchBar = ({
   onSearch,
@@ -39,7 +40,7 @@ const SearchBar = ({
     if(urlName[4]==="NHS"){
      (async()=>{
       handleBackDropOpen()
-        const response= await axios.get('https://health-project-dummy.onrender.com/store/ccsdcode')
+        const response= await axios.get(hostUrl+'/store/ccsdcode')
         setccsdCodes(response.data.data);
         handleBackDropClose()
       })()

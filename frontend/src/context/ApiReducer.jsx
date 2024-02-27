@@ -1,9 +1,9 @@
 import * as types from "./actionType";
 import axios from "axios";
 
-// const hostUrl = "http://localhost:8080";
+// export const hostUrl = "http://localhost:8080";
 
-const hostUrl ="https://health-project-dummy.onrender.com"
+export const hostUrl ="https://health-project-dummy.onrender.com"
 
 export const apiReducer = (state, action) => {
   switch (action.type) {

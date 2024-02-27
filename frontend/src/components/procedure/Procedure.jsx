@@ -26,6 +26,9 @@ const Procedure = () => {
     setDataRow2,
     setDataRow3,
     handleAlertOpen,
+    dataRow1,
+    dataRow2,
+    dataRow3,
   } = useContext(ActionContext);
   const [alertData, setAlertData] = useState({
     severity: "success",
@@ -222,6 +225,12 @@ const Procedure = () => {
         alertData={alertData}
         setAlertData={setAlertData}
         initialTableData={initialTableData}
+        setDataRow1={setDataRow1}
+        dataRow1={dataRow1}
+        dataRow2={dataRow2}
+        dataRow3={dataRow3}
+        setDataRow2={setDataRow2}
+        setDataRow3={setDataRow3}
       ></Customtable>
     </div>
   );
