@@ -9,6 +9,7 @@ import {
   ListItem,
   ListItemText,
   Typography,
+  useMediaQuery,
 } from "@mui/material";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import styles from "./CodesBySpeciality.module.css";
@@ -26,7 +27,9 @@ const CodesBySpeciality = () => {
   const sortedLinks = specialityLinks
     .slice()
     .sort((a, b) => String(a.text).localeCompare(String(b.text)));
-  const linksPerColumn = Math.ceil(sortedLinks.length / 3);
+  const isTablet = useMediaQuery("(max-width: 800px)");
+  const columns = isTablet ? 2 : 3;
+  const linksPerColumn = Math.ceil(sortedLinks.length / columns);
 
   return (
     <div>
@@ -49,8 +52,8 @@ const CodesBySpeciality = () => {
         </Box>
         <Box>
           <Grid container spacing={2}>
-            {[...Array(3)].map((_, columnIndex) => (
-              <Grid item xs={12} sm={12} md={4} key={columnIndex}>
+            {[...Array(columns)].map((_, columnIndex) => (
+              <Grid item xs={12} sm={isTablet ? 6 : 4} key={columnIndex}>
                 <List disablePadding className={`linkList ${styles.listItem}`}>
                   {sortedLinks
                     .slice(

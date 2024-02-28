@@ -72,6 +72,7 @@ const Home = () => {
   } = useContext(ActionContext);
   const containerRef = useRef(null);
   const [currentPage, setCurrentPage] = useState("");
+  const [isPrint, setIsPrint] = useState(false);
   const options = [
     { path: `/patients/${patientId}/procedure/NHS`, label: "Procedure (NHS)" },
     {
@@ -350,7 +351,10 @@ const Home = () => {
           <CssBaseline />
           <AppBar
             component="nav"
-            sx={{ backgroundColor: "rgb(108,129,192)!important" ,padding:'5px'}}
+            sx={{
+              backgroundColor: "rgb(108,129,192)!important",
+              padding: "5px",
+            }}
             className={styles.navbarHeader}
           >
             <Toolbar>
@@ -363,21 +367,22 @@ const Home = () => {
               >
                 <MenuIcon />
               </IconButton>
-  
+
               <Typography
                 variant="h6"
                 component="div"
-                sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }} className={styles.header}
+                sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
+                className={styles.header}
               >
                 CODE FINDER
               </Typography>
               <Box sx={{ display: { xs: "none", sm: "block" } }}>
                 {navItems.map((item) => (
                   <Link to={item.link}>
-                   <Button key={item.title} sx={{ color: "#fff" }}>
-                    {item.title}
-                  </Button></Link>
-                 
+                    <Button key={item.title} sx={{ color: "#fff" }}>
+                      {item.title}
+                    </Button>
+                  </Link>
                 ))}
               </Box>
             </Toolbar>
@@ -411,7 +416,11 @@ const Home = () => {
           }
           onDiscard={onDiscard}
         ></ConfirmModal>
-        <PreviewPdf open={pdfModalOpen} handleClose={handleClosePdfModal}></PreviewPdf>
+        <PreviewPdf
+          open={pdfModalOpen}
+          handleClose={handleClosePdfModal}
+          isPrint={isPrint}
+        ></PreviewPdf>
         <Box>
           <Button></Button>
         </Box>
@@ -573,13 +582,28 @@ const Home = () => {
             {activeBtns.edit ? "Complete" : "Edit"}
           </Button>
           {!activeBtns.edit && (
-            <Button
-              onClick={handleClickPdfModalOpen}
-              variant={"contained"}
-              className={`${styles.ediBtn_color_active} ${styles.pdfActions}`}
-            >
-              Save as pdf
-            </Button>
+            <Box>
+              <Button
+                onClick={() => {
+                  handleClickPdfModalOpen();
+                  setIsPrint(false);
+                }}
+                variant={"contained"}
+                className={`${styles.ediBtn_color_active} ${styles.pdfActions}`}
+              >
+                Save as pdf
+              </Button>
+              <Button
+                onClick={() => {
+                  handleClickPdfModalOpen();
+                  setIsPrint(true);
+                }}
+                variant={"contained"}
+                className={`${styles.ediBtn_color_active} ${styles.pdfActions}`}
+              >
+                Print
+              </Button>
+            </Box>
           )}
         </div>
       </Container>

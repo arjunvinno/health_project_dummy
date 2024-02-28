@@ -1,12 +1,14 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 
 import {
+  Box,
   Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
   IconButton,
+  Typography,
 } from "@mui/material";
 import styles from "./PreviewPdf.module.css";
 import CloseIcon from "@mui/icons-material/Close";
@@ -16,8 +18,10 @@ import * as html2pdf from "html2pdf.js";
 import axios from "axios";
 import { hostUrl } from "../../context/ApiReducer";
 import { useParams } from "react-router-dom";
+import PatientViewDetails from "./PatientViewDetails/PatientViewDetails";
+import { useReactToPrint } from "react-to-print";
 
-const PreviewPdf = ({ open, handleClose }) => {
+const PreviewPdf = ({ open, handleClose, isPrint }) => {
   let [initialTableData, setinitialTableData] = useState({
     tr1: [],
     tr2: [],
@@ -28,6 +32,7 @@ const PreviewPdf = ({ open, handleClose }) => {
     message: "",
   });
   let { patientId } = useParams();
+  const componentPrintRef = useRef();
 
   const [diagnosticsData, setDiagnosticsData] = useState({
     data: [],
@@ -213,6 +218,11 @@ const PreviewPdf = ({ open, handleClose }) => {
         // console.log(error);
       });
   };
+
+  const handlePrint = useReactToPrint({
+    content: () => componentPrintRef.current,
+  });
+
   return (
     <div>
       <Dialog
@@ -223,8 +233,12 @@ const PreviewPdf = ({ open, handleClose }) => {
         className={styles.dialogContainer}
         sx={{ top: "0px", maxHeight: "100vh" }}
       >
-        <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-          Dowload Pdf
+        <DialogTitle
+          sx={{ m: 0, p: 2 }}
+          id="customized-dialog-title"
+          color={"#3e5282"}
+        >
+          {isPrint ? (<>Print</>) : (<>Download</>)} Pdf
         </DialogTitle>
         <IconButton
           aria-label="close"
@@ -244,62 +258,99 @@ const PreviewPdf = ({ open, handleClose }) => {
           dividers
         >
           {" "}
-          <div id="reportDowmload">
-            <TableView
-              tableHeaders={diagnosticsTableHeaders}
-              tableType={"diagnostics"}
-              activeBtns={{
-                edit: false,
-                save: true,
-                cancel: false,
-                complete: false,
-              }}
-              defaultDataKeys={defaultdiagnoDataKeys}
-              dataRow1={diagnosticsData.dataRow1}
-              dataRow2={diagnosticsData.dataRow2}
-              dataRow3={diagnosticsData.dataRow3}
-            ></TableView>
+          <div
+            id="reportDowmload"
+            ref={componentPrintRef}
+            style={{ margin: "15px" }}
+          >
+            <Box marginBottom={"16px"}>
+              <PatientViewDetails></PatientViewDetails>
+              <Typography variant="h6" gutterBottom color="#305ec9">
+                Diagnostic
+              </Typography>
+              <TableView
+                tableHeaders={diagnosticsTableHeaders}
+                tableType={"diagnosis"}
+                activeBtns={{
+                  edit: false,
+                  save: true,
+                  cancel: false,
+                  complete: false,
+                }}
+                defaultDataKeys={defaultdiagnoDataKeys}
+                dataRow1={diagnosticsData.dataRow1}
+                dataRow2={diagnosticsData.dataRow2}
+                dataRow3={diagnosticsData.dataRow3}
+              ></TableView>
+            </Box>
 
-            <TableView
-              tableHeaders={procedureNhsTableHeaders}
-              tableType={"diagnostics"}
-              activeBtns={{
-                edit: false,
-                save: true,
-                cancel: false,
-                complete: false,
-              }}
-              defaultDataKeys={defaultprocedureDataKeys}
-              dataRow1={procedureNhsData.dataRow1}
-              dataRow2={procedureNhsData.dataRow2}
-              dataRow3={procedureNhsData.dataRow3}
-            ></TableView>
+            <Box marginBottom={"16px"}>
+              <Typography variant="h6" gutterBottom color="#305ec9">
+                Procedure (NHS)
+              </Typography>
+              <TableView
+                tableHeaders={procedureNhsTableHeaders}
+                tableType={"diagnostics"}
+                activeBtns={{
+                  edit: false,
+                  save: true,
+                  cancel: false,
+                  complete: false,
+                }}
+                defaultDataKeys={defaultprocedureDataKeys}
+                dataRow1={procedureNhsData.dataRow1}
+                dataRow2={procedureNhsData.dataRow2}
+                dataRow3={procedureNhsData.dataRow3}
+              ></TableView>
+            </Box>
 
-            <TableView
-              tableHeaders={procedurePrivateTableHeaders}
-              tableType={"diagnostics"}
-              activeBtns={{
-                edit: false,
-                save: true,
-                cancel: false,
-                complete: false,
-              }}
-              defaultDataKeys={defaultprocedureDataKeys}
-              dataRow1={procedurePrivateData.dataRow1}
-              dataRow2={procedurePrivateData.dataRow2}
-              dataRow3={procedurePrivateData.dataRow3}
-            ></TableView>
+            <Box>
+              <Typography variant="h6" gutterBottom color="#305ec9">
+                Procedure (Private)
+              </Typography>
+              <TableView
+                tableHeaders={procedurePrivateTableHeaders}
+                tableType={"diagnostics"}
+                activeBtns={{
+                  edit: false,
+                  save: true,
+                  cancel: false,
+                  complete: false,
+                }}
+                defaultDataKeys={defaultprocedureDataKeys}
+                dataRow1={procedurePrivateData.dataRow1}
+                dataRow2={procedurePrivateData.dataRow2}
+                dataRow3={procedurePrivateData.dataRow3}
+              ></TableView>
+            </Box>
           </div>
         </DialogContent>
         <DialogActions sx={{ padding: "15px 24px" }}>
           <Button
-            className={styles.submitBtn}
-            variant="contained"
-            autoFocus
-            onClick={downloadReportsPdf}
+            variant="outlined"
+            onClick={handleClose}
+            className={styles.dialog_button_clr}
           >
-            download
+            Cancel
           </Button>
+          {!isPrint ? (
+            <Button
+              className={`${styles.submitBtn} ${styles.dialog_button_bg_clr}`}
+              variant="contained"
+              autoFocus
+              onClick={downloadReportsPdf}
+            >
+              download
+            </Button>
+          ) : (
+            <Button
+              variant="contained"
+              onClick={handlePrint}
+              className={styles.dialog_button_bg_clr}
+            >
+              Print
+            </Button>
+          )}
         </DialogActions>
       </Dialog>
     </div>

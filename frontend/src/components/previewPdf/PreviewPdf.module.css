@@ -1,3 +1,11 @@
-.dialogContainer>div:nth-child(3){
-    align-items: start!important;
+.dialogContainer>div:nth-child(3) {
+    align-items: start !important;
+}
+
+.dialog_button_bg_clr {
+    background-color: #3e5282 !important;
+}
+
+.dialog_button_clr {
+    color: #3e5282 !important;
 }
