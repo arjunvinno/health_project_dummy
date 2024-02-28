@@ -38,7 +38,6 @@ import { ActionContext } from "../../context/ActionContext";
 import * as types from "../../context/actionType";
 import PatientFields from "../Patient-fields/PatientFields";
 import ConfirmModal from "../confirm-modal/ConfirmModal";
-import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import ScrollToTop from "../ScrollToTop";
 import * as html2pdf from "html2pdf.js";
 import MenuIcon from "@mui/icons-material/Menu";

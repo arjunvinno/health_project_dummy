@@ -1,26 +1,32 @@
 .thead {
   max-width: 10rem;
 }
+
 .thead > p {
   margin: 0px;
 }
+
 .thead > p:nth-child(2) {
   font-size: 12px;
   font-weight: 500 !important;
 }
+
 .default_row > div {
   display: flex;
   justify-content: space-between;
   align-items: center;
   max-width: 14rem;
 }
+
 .concurent > p:first-child {
   margin-top: 0px;
 }
+
 .concurent > p:last-child {
   margin-top: 0px;
   margin-bottom: 0px;
 }
+
 .headerRow > th,
 .headerRow > th > p {
   font-weight: 600;
@@ -29,6 +35,7 @@
   font-size: 1rem;
   padding: 20px 6px;
 }
+
 .headerRow > td {
   font-weight: 600;
   color: #5e78b5 !important;
@@ -41,10 +48,12 @@
   max-height: 300px !important;
   overflow-y: auto;
 }
+
 .activeOnHover:hover {
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
 }
+
 .actions {
   display: flex;
   align-items: baseline;
@@ -77,6 +86,7 @@
   background-color: #fff !important;
   height: 200px !important;
 }
+
 td {
   padding: 16px 10px !important;
 }
@@ -84,6 +94,7 @@ td {
 .defaultHeader {
   width: 13rem !important;
 }
+
 .onEditActive {
   width: 13rem !important;
 }
@@ -92,6 +103,7 @@ td {
   width: 13vw !important;
   cursor: pointer !important;
 }
+
 .onEditNotActiveDia {
   width: 13rem !important;
   cursor: pointer !important;
@@ -101,10 +113,12 @@ td {
   width: 13rem !important;
   cursor: pointer !important;
 }
+
 .info{
     max-width: 6rem;
     min-width: 6rem;
 }
+
 .info > p {
   white-space: wrap!important;
   word-wrap: break-word!important;
@@ -117,6 +131,7 @@ td {
   max-width: 17vw !important;
   min-width: 17vw !important;
 }
+
 .comments {
   max-width: 10vw !important;
   min-width: 10vw !important;

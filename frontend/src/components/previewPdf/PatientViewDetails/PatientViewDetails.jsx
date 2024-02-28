@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Box, Card, Paper, Typography } from "@mui/material";
+import { Box, Paper, Typography } from "@mui/material";
 import { hostUrl } from "../../../context/ApiReducer";
 
 const PatientViewDetails = ({ patient }) => {
@@ -37,7 +37,7 @@ const PatientViewDetails = ({ patient }) => {
         <div
           style={{
             display: "flex",
-            marginBottom: 8,
+            marginBottom: 12,
             justifyContent: "space-between",
             flexWrap: "wrap",
           }}
@@ -47,7 +47,7 @@ const PatientViewDetails = ({ patient }) => {
               variant="body1"
               style={{ marginRight: 16, color: "#5e78b5" }}
             >
-              {`First Name: `}
+              {`FIRST NAME : `}
             </Typography>
             <Typography variant="body1" sx={{ color: "#555" }}>
               {patientDetails.firstName}
@@ -58,7 +58,7 @@ const PatientViewDetails = ({ patient }) => {
               variant="body1"
               style={{ marginLeft: 16, marginRight: 16, color: "#5e78b5" }}
             >
-              {`Last Name: `}
+              {`LAST NAME : `}
             </Typography>
             <Typography variant="body1" sx={{ color: "#555" }}>
               {patientDetails.lastName}
@@ -69,7 +69,7 @@ const PatientViewDetails = ({ patient }) => {
         <div
           style={{
             display: "flex",
-            marginBottom: 8,
+            marginBottom: 12,
             justifyContent: "space-between",
             flexWrap: "wrap",
           }}
@@ -79,7 +79,7 @@ const PatientViewDetails = ({ patient }) => {
               variant="body1"
               style={{ marginRight: 16, color: "#5e78b5" }}
             >
-              {`Gender: `}
+              {`GENDER : `}
             </Typography>
             <Typography
               variant="body1"
@@ -93,7 +93,7 @@ const PatientViewDetails = ({ patient }) => {
               variant="body1"
               style={{ marginRight: 10, color: "#5e78b5" }}
             >
-              {`Age: `}
+              {`AGE : `}
             </Typography>
             <Typography
               variant="body1"
@@ -107,7 +107,7 @@ const PatientViewDetails = ({ patient }) => {
               variant="body1"
               style={{ marginRight: 16, color: "#5e78b5" }}
             >
-              {`Date of Birth: `}
+              {`DATE OF BIRTH : `}
             </Typography>
             <Typography variant="body1" sx={{ color: "#555" }}>
               {new Date(patientDetails.dob).toLocaleDateString()}
@@ -127,7 +127,7 @@ const PatientViewDetails = ({ patient }) => {
               variant="body1"
               style={{ marginRight: 16, color: "#5e78b5" }}
             >
-              {`MRN No: `}
+              {`MRN NO : `}
             </Typography>
             <Typography
               variant="body1"
@@ -141,7 +141,7 @@ const PatientViewDetails = ({ patient }) => {
               variant="body1"
               style={{ marginRight: 16, color: "#5e78b5" }}
             >
-              {`NHS No: `}
+              {`NHS NO : `}
             </Typography>
             <Typography variant="body1" sx={{ color: "#555" }}>
               {patientDetails.nhsNo}

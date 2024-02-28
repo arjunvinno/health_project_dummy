@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import {
   Box,
@@ -12,7 +12,6 @@ import {
 } from "@mui/material";
 import styles from "./PreviewPdf.module.css";
 import CloseIcon from "@mui/icons-material/Close";
-import { ActionContext } from "../../context/ActionContext";
 import TableView from "./customTableView/TableView";
 import * as html2pdf from "html2pdf.js";
 import axios from "axios";
@@ -177,7 +176,7 @@ const PreviewPdf = ({ open, handleClose, isPrint }) => {
   let defaultprocedureDataKeys = [...defaultdiagnoDataKeys];
   defaultprocedureDataKeys[0] = "code";
   let downloadReportsPdf = () => {
-    let canvasDiv = document.getElementById("reportDowmload");
+    let canvasDiv = document.getElementById("reportDownload");
 
     let HTML_Width = canvasDiv.offsetWidth;
     let HTML_Height = canvasDiv.offsetHeight;
@@ -259,9 +258,9 @@ const PreviewPdf = ({ open, handleClose, isPrint }) => {
         >
           {" "}
           <div
-            id="reportDowmload"
+            id="reportDownload"
             ref={componentPrintRef}
-            style={{ margin: "15px" }}
+            style={{ margin: isPrint ? "15px" : "" }}
           >
             <Box marginBottom={"16px"}>
               <PatientViewDetails></PatientViewDetails>
