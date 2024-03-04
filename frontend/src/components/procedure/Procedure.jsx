@@ -9,7 +9,7 @@ import * as types from "../../context/actionType";
 const Procedure = () => {
   let location = useLocation();
   let path = useRef("");
-  let [privateCheck, setPrivate] = useState(false);
+  let [privateCheck, setPrivate] = useState(location.pathname.includes('private')?true:false);
   let [initialTableData, setinitialTableData] = useState({
     tableRow1: [],
     tableRow2: [],
