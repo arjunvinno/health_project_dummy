@@ -10,7 +10,7 @@ const Diagnosis = () => {
   const {
     apiDispatch,
     activeBtns,
-    datas: { diagnosticsOnId,codes },
+    datas: { diagnosticsOnId,codes,patient },
     handleBackDropOpen,
     handleBackDropClose,
     setDataRow1,
@@ -87,6 +87,15 @@ const Diagnosis = () => {
       await fetchData(
         apiDispatch,
         {
+          loading: types.getCodes_Loading,
+          dataType: types.getCodes,
+          error: types.getCodes_error,
+        },
+        `${'store/icd10code'}`
+      );
+      await fetchData(
+        apiDispatch,
+        {
           loading: types.GetDiagnostics_OnPatientId_Loading,
           dataType: types.GetDiagnostics_OnPatientId,
           error: types.GetDiagnostics_OnPatientId_error,
@@ -96,18 +105,9 @@ const Diagnosis = () => {
           userId: patientId,
         }
       );
+   
     })();
-    (async () => {
-      await fetchData(
-        apiDispatch,
-        {
-          loading: types.getCodes_Loading,
-          dataType: types.getCodes,
-          error: types.getCodes_error,
-        },
-        `${'store/icd10code'}`
-      );
-       })();
+
     return () => {
       apiDispatch({ type: types.ClearDiagnosticsAlert_Messages });
       setDataRow1([]);
@@ -146,7 +146,7 @@ const Diagnosis = () => {
     });
   }
   useEffect(() => {
-    if (diagnosticsOnId.loading || codes.loading) {
+    if (diagnosticsOnId.loading || codes.loading||patient.loading) {
       handleBackDropOpen();
     } else {
       if (diagnosticsOnId.data.length > 0) {
@@ -181,7 +181,8 @@ const Diagnosis = () => {
     diagnosticsOnId.error.message,
     diagnosticsOnId.success.message,
     location.pathname,
-    codes.loading
+    codes.loading,
+    patient.loading
   ]);
 
   useEffect(() => {

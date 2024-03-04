@@ -130,7 +130,7 @@ td {
 }
 
 @media screen and (max-width: 686px) {
-  thead {
+  .headerHead {
     display: none !important;
   }
   .tbodyInfoRow {

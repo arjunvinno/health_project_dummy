@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import "./SearchComponent.css";
 import SearchBar from "./Search-bar/SearchBar";
 
-const SearchComponent = ({ header, subHeader, code, onSearch}) => {
+const SearchComponent = ({ header, code}) => {
   const [searchTerm, setSearchTerm] = useState("");
   const searchResultsRef = useRef(null);
   return (
@@ -17,7 +17,6 @@ const SearchComponent = ({ header, subHeader, code, onSearch}) => {
         </h4>
         <div ref={searchResultsRef} className="search_bar">
           <SearchBar
-            onSearch={onSearch}
             searchTerm={searchTerm}
             setSearchTerm={setSearchTerm}
             header={header}

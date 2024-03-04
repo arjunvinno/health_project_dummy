@@ -15,7 +15,6 @@ import { useTheme } from "@emotion/react";
 import { hostUrl } from "../../../context/ApiReducer";
 
 const SearchBar = ({
-  onSearch,
   setSearchTerm,
   searchTerm = "",
   header,
@@ -36,7 +35,6 @@ const SearchBar = ({
 
   useEffect(()=>{
     const urlName = location.pathname.split("/");
-    console.log(urlName[4])
     if(urlName[4]==="NHS"){
      (async()=>{
       handleBackDropOpen()
@@ -55,19 +53,12 @@ const SearchBar = ({
     }
     timerRef.current = setTimeout(() => {
       let searchData = [];
-      console.log(searchTerm);
       if (searchTerm.trim() !== "") {
-        console.log(searchOnccsd)
         if(searchOnccsd==="nhs"){
          ccsdCodes.filter((el)=>el.description.toLowerCase().includes(searchTerm.toLowerCase())).forEach((el)=>{
           
-          let modifiedString = el.code.slice(0, -1); // Remove the last character
+          let modifiedString = el.code.slice(0, -1); 
           modifiedString = modifiedString.slice(0, -1) + "." + modifiedString.slice(-1);
-          // datas.codes.data.forEach((el)=>{
-          // if(el.code===modifiedString){
-          //   searchData.push(el)
-          // }
-          // })
           let data=datas.codes.data.find((el)=>el.code===modifiedString)
           if(data){
             searchData.push(data)
@@ -86,7 +77,6 @@ const SearchBar = ({
           searchData = [{ description: "No Results", code: "" }];
         }
       }
-      console.log(searchData);
       setSearchResults(searchData);
     }, 1000);
   }, [searchTerm,searchOnccsd]);
@@ -102,18 +92,13 @@ const SearchBar = ({
             endAdornment: (
               <InputAdornment position="end">
                 <IconButton
-                //  onClick={() => onSearch(searchTerm)}
                 >
                   <SearchIcon />
                 </IconButton>
               </InputAdornment>
             ),
           }}
-          // onKeyDown={(e) => {
-          //   if (e.code === "Enter" && searchTerm) {
-          //     onSearch(searchTerm);
-          //   }
-          // }}
+     
           onChange={handleChange}
         />
       </FormControl>

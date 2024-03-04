@@ -69,7 +69,7 @@
 
 @media screen and (max-width: 600px) {
   .search-cont {
-    width: calc(100% - 14%);
+    width: calc(100%);
   }
   .search-inner {
     display: flex;

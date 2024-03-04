@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 
 import {
   Box,
@@ -18,7 +18,8 @@ import axios from "axios";
 import { hostUrl } from "../../context/ApiReducer";
 import { useParams } from "react-router-dom";
 import PatientViewDetails from "./PatientViewDetails/PatientViewDetails";
-import { useReactToPrint } from "react-to-print";
+import  { useReactToPrint } from "react-to-print";
+import { ActionContext } from "../../context/ActionContext";
 
 const PreviewPdf = ({ open, handleClose, isPrint }) => {
   let [initialTableData, setinitialTableData] = useState({
@@ -30,9 +31,13 @@ const PreviewPdf = ({ open, handleClose, isPrint }) => {
     severity: "",
     message: "",
   });
+  const {
+
+    datas: { patient },
+  
+  } = useContext(ActionContext);
   let { patientId } = useParams();
   const componentPrintRef = useRef();
-
   const [diagnosticsData, setDiagnosticsData] = useState({
     data: [],
     dataRow1: [],
@@ -53,32 +58,36 @@ const PreviewPdf = ({ open, handleClose, isPrint }) => {
   });
 
   useEffect(() => {
-    (async () => {
-      let diagnosticResponse = await axios.get(
-        hostUrl + "/diagnostic/" + patientId
-      );
-      setDiagnosticsData({
-        ...diagnosticsData,
-        data: diagnosticResponse.data.data,
-      });
-
-      let procedureNhsResponse = await axios.get(
-        hostUrl + "/procedure/" + patientId + "/nhs"
-      );
-      setprocedureNhsData({
-        ...procedureNhsData,
-        data: procedureNhsResponse.data.data,
-      });
-
-      let procedurePrivateResponse = await axios.get(
-        hostUrl + "/procedure/" + patientId + "/private"
-      );
-      setprocedurePrivateData({
-        ...procedurePrivateData,
-        data: procedurePrivateResponse.data.data,
-      });
-    })();
-  }, []);
+    if (open) {
+      // Make API calls here
+      (async () => {
+        let diagnosticResponse = await axios.get(
+          hostUrl + "/diagnostic/" + patientId
+        );
+        setDiagnosticsData({
+          ...diagnosticsData,
+          data: diagnosticResponse.data.data,
+        });
+  
+        let procedureNhsResponse = await axios.get(
+          hostUrl + "/procedure/" + patientId + "/nhs"
+        );
+        setprocedureNhsData({
+          ...procedureNhsData,
+          data: procedureNhsResponse.data.data,
+        });
+  
+        let procedurePrivateResponse = await axios.get(
+          hostUrl + "/procedure/" + patientId + "/private"
+        );
+        setprocedurePrivateData({
+          ...procedurePrivateData,
+          data: procedurePrivateResponse.data.data,
+        });
+      })();
+    }
+   
+  }, [open]);
 
   useEffect(() => {
     filterOnTableData(
@@ -183,20 +192,12 @@ const PreviewPdf = ({ open, handleClose, isPrint }) => {
     if (HTML_Width * HTML_Height >= 268435456) {
       this.toasterService.warning("Content is too large");
     }
-    // this.disableDowload = true;
-    // let url = window.location.href;
-    // let link = document.createElement("a");
-    // link.href = url;
-    // canvasDiv.appendChild(link)
-    // link.style.display='none'
-    // let title = document.querySelector(".title");
-    // jsPDF: { unit: "pt", format: [700, 842], orientation: "p" },
     const pdfOptions = {
       margin: 30,
-      filename: "report" + ".pdf",
+      filename: patient.data.firstName+ ".pdf",
       image: { type: "jpeg", quality: 0.98 },
       enableLinks: true,
-      pagebreak: { mode: ["avoid-all"] },
+      pagebreak: { mode: ['css', 'legacy'] ,avoid: ['tr','h6']},
       html2canvas: { scale: 2, useCORS: true },
       jsPDF: { unit: "pt", format: [800, 842], orientation: "p" },
     };
@@ -207,19 +208,25 @@ const PreviewPdf = ({ open, handleClose, isPrint }) => {
       .outputPdf()
       .save()
       .then((res) => {
-        // this.disableDowload = false;
-        // this.toasterService.success("Hello page downloaded successfully");
-        console.log(res);
+        handleClose()
       })
       .catch((error) => {
-        // this.disableDowload = false;
-        // this.toasterService.error("Failed to download");
-        // console.log(error);
+        console.log(error);
+        handleClose()
       });
   };
 
   const handlePrint = useReactToPrint({
     content: () => componentPrintRef.current,
+    pageStyle: `
+      @page {
+        size: A4; // Set the page size as needed
+        margin:5; // Remove default margin
+      }
+      body {
+        margin: 0; // Remove default margin
+      }
+    `,
   });
 
   return (
@@ -263,7 +270,7 @@ const PreviewPdf = ({ open, handleClose, isPrint }) => {
             style={{ margin: isPrint ? "15px" : "" }}
           >
             <Box marginBottom={"16px"}>
-              <PatientViewDetails></PatientViewDetails>
+              <PatientViewDetails ></PatientViewDetails>
               <Typography variant="h6" gutterBottom color="#305ec9">
                 Diagnostic
               </Typography>
@@ -342,6 +349,17 @@ const PreviewPdf = ({ open, handleClose, isPrint }) => {
               download
             </Button>
           ) : (
+          //   <ReactToPrint
+          //   trigger={() => 
+          //     <Button
+          //     variant="contained"
+          //     // onClick={handlePrint}
+          //     className={styles.dialog_button_bg_clr}
+          //   >
+          //     Print
+          //   </Button>}
+          //   content={() =>  componentPrintRef.current}
+          // />
             <Button
               variant="contained"
               onClick={handlePrint}

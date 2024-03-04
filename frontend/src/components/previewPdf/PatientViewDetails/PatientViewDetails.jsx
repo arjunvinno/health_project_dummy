@@ -1,27 +1,15 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useContext,} from "react";
 import { Box, Paper, Typography } from "@mui/material";
-import { hostUrl } from "../../../context/ApiReducer";
+import { ActionContext } from "../../../context/ActionContext";
 
-const PatientViewDetails = ({ patient }) => {
-  const { patientId } = useParams();
-  const [patientDetails, setPatientDetails] = useState([]);
+const PatientViewDetails = ({ patientDetails }) => {
 
-  const handleGetAllPatientDetails = async () => {
-    try {
-      const response = await axios.get(`${hostUrl}/patients/${patientId}`);
-      const result = await response.data.data;
-      setPatientDetails(result);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const {
 
-  useEffect(() => {
-    handleGetAllPatientDetails();
-  }, [patientId]);
-
+    datas: { patient },
+  
+  } = useContext(ActionContext);
   return (
     <Box>
       <Paper
@@ -50,7 +38,7 @@ const PatientViewDetails = ({ patient }) => {
               {`FIRST NAME : `}
             </Typography>
             <Typography variant="body1" sx={{ color: "#555" }}>
-              {patientDetails.firstName}
+              {patient.data.firstName}
             </Typography>
           </Box>
           <Box sx={{ display: "flex" }}>
@@ -61,7 +49,7 @@ const PatientViewDetails = ({ patient }) => {
               {`LAST NAME : `}
             </Typography>
             <Typography variant="body1" sx={{ color: "#555" }}>
-              {patientDetails.lastName}
+              {patient.data.lastName}
             </Typography>
           </Box>
         </div>
@@ -85,7 +73,7 @@ const PatientViewDetails = ({ patient }) => {
               variant="body1"
               style={{ marginRight: 24, color: "#555" }}
             >
-              {patientDetails.gender}
+              {patient.data.gender}
             </Typography>
           </Box>
           <Box sx={{ display: "flex" }}>
@@ -99,7 +87,7 @@ const PatientViewDetails = ({ patient }) => {
               variant="body1"
               style={{ marginRight: 20, color: "#555" }}
             >
-              {patientDetails.age}
+              {patient.data.age}
             </Typography>
           </Box>
           <Box sx={{ display: "flex" }}>
@@ -110,7 +98,7 @@ const PatientViewDetails = ({ patient }) => {
               {`DATE OF BIRTH : `}
             </Typography>
             <Typography variant="body1" sx={{ color: "#555" }}>
-              {new Date(patientDetails.dob).toLocaleDateString()}
+              {new Date(patient.data.dob).toLocaleDateString()}
             </Typography>
           </Box>
         </div>
@@ -133,7 +121,7 @@ const PatientViewDetails = ({ patient }) => {
               variant="body1"
               style={{ marginRight: 16, color: "#555" }}
             >
-              {patientDetails.mrnNo}
+              {patient.data.mrnNo}
             </Typography>
           </Box>
           <Box sx={{ display: "flex" }}>
@@ -144,7 +132,7 @@ const PatientViewDetails = ({ patient }) => {
               {`NHS NO : `}
             </Typography>
             <Typography variant="body1" sx={{ color: "#555" }}>
-              {patientDetails.nhsNo}
+              {patient.data.nhsNo}
             </Typography>
           </Box>
         </div>

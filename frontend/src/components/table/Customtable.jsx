@@ -41,17 +41,7 @@ const Customtable = ({
   activeBtns
 }) => {
 
-  // const {
-  //   // activeBtns,
-  //   // dataRow1,
-  //   // setDataRow1,
-  //   // dataRow2,
-  //   // setDataRow2,
-  //   // dataRow3,
-  //   // setDataRow3,
-  //   apiDispatch,
-  //   datas: { allPatients, mySavedCodes },
-  // } = useContext(ActionContext);
+
   const { apiDispatch = () => {}, datas = {} } = useContext(ActionContext) || {};
   const { allPatients = { totalCount: 0 }, mySavedCodes = { totalCount: 0 } } = datas;
   let tableContainer = useRef(null);
@@ -108,7 +98,6 @@ const Customtable = ({
       setTableKeys(newKeys);
     } else if (activeBtns.edit) {
       setnewTableHeaders(tableHeaders);
-      console.log(tableHeaders);
       setTableKeys(defaultDataKeys);
     }
   }, [activeBtns.edit]);
@@ -326,7 +315,7 @@ const Customtable = ({
         component={Paper}
         sx={{
           maxHeight:
-            tableType !== "patients" && tableType === "mysavedcodes"
+            tableType !== "patients" && tableType !== "mysavedcodes"
               ? 600
               : "fit-content",
           boxShadow:
@@ -341,7 +330,7 @@ const Customtable = ({
           stickyHeader
           aria-label="sticky table"
         >
-          <TableHead className="header">
+          <TableHead className={styles.headerHead}>
             <TableRow className={styles.headerRow}>{setHeaders()}</TableRow>
           </TableHead>
           <TableBody>

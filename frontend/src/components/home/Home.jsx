@@ -6,7 +6,6 @@ import {
   CssBaseline,
   Divider,
   Drawer,
-  Grid,
   IconButton,
   List,
   ListItem,
@@ -63,14 +62,12 @@ const Home = () => {
     dataRow1,
     dataRow2,
     dataRow3,
-    apiDispatch,
     setDataRow1,
     setDataRow2,
     setDataRow3,
-    datas: { patient },
   } = useContext(ActionContext);
   const containerRef = useRef(null);
-  const [currentPage, setCurrentPage] = useState("");
+  // const [currentPage, setCurrentPage] = useState("");
   const [isPrint, setIsPrint] = useState(false);
   const options = [
     { path: `/patients/${patientId}/procedure/NHS`, label: "Procedure (NHS)" },
@@ -145,7 +142,6 @@ const Home = () => {
       setSearchSubHead("Primary diagnosis");
       setSearchUrl("store/icd10code");
       setSearchCode("ICD-10");
-      setCurrentPage("diagnosis");
     } else if (urlName[3] === "procedure") {
       setSearchHeader("Procedure coding");
       setSearchSubHead("Procedure");
@@ -153,11 +149,9 @@ const Home = () => {
       if (selectedIndex === 0) {
         setSearchUrl("store/opcscode");
         setSearchCode("OPCS-4");
-        setCurrentPage("procedure_nhs");
       } else {
         setSearchCode("CCSD");
         setSearchUrl("store/ccsdcode");
-        setCurrentPage("procedure_private");
       }
     }
   }, [location.pathname]);
@@ -218,17 +212,6 @@ const Home = () => {
     navigate(navigationPath);
   };
 
-  const handleSearchInput = async (result) => {
-    // await fetchData(
-    //   apiDispatch,
-    //   {
-    //     loading: types.getCodes_Loading,
-    //     dataType: types.getCodes,
-    //     error: types.getCodes_error,
-    //   },
-    //   `${searchUrl}?search=${result}`
-    // );
-  };
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
@@ -249,48 +232,6 @@ const Home = () => {
     setOpen(false);
   };
 
-  let downloadHelloPage = () => {
-    let canvasDiv = document.getElementById("reportDowmload");
-
-    let HTML_Width = canvasDiv.offsetWidth;
-    let HTML_Height = canvasDiv.offsetHeight;
-    if (HTML_Width * HTML_Height >= 268435456) {
-      this.toasterService.warning("Content is too large");
-    }
-    // this.disableDowload = true;
-    // let url = window.location.href;
-    // let link = document.createElement("a");
-    // link.href = url;
-    // canvasDiv.appendChild(link)
-    // link.style.display='none'
-    // let title = document.querySelector(".title");
-
-    const pdfOptions = {
-      margin: 5,
-      filename: patient.data.firstName + "_" + currentPage + ".pdf",
-      image: { type: "jpeg", quality: 0.98 },
-      enableLinks: true,
-      pagebreak: { mode: ["avoid-all"] },
-      html2canvas: { scale: 2, useCORS: true },
-      jsPDF: { unit: "pt", format: [700, 842], orientation: "p" },
-    };
-
-    html2pdf()
-      .from(canvasDiv)
-      .set(pdfOptions)
-      .outputPdf()
-      .save()
-      .then((res) => {
-        // this.disableDowload = false;
-        // this.toasterService.success("Hello page downloaded successfully");
-        console.log(res);
-      })
-      .catch((error) => {
-        // this.disableDowload = false;
-        // this.toasterService.error("Failed to download");
-        // console.log(error);
-      });
-  };
   const drawerWidth = 300;
   const navItems = [
     { title: "PATIENT LOOK UP", link: "/patients" },
@@ -335,17 +276,7 @@ const Home = () => {
     <div style={{ position: "relative" }}>
       <ScrollToTop></ScrollToTop>
       <Container ref={containerRef} className={styles.container} maxWidth="xl">
-        {/* <Typography
-          variant="h4"
-          sx={{
-            fontWeight: 700,
-            textAlign: "center",
-            color: "#6c81c0",
-            fontSize: "30px",
-          }}
-        >
-          CODE FINDER
-        </Typography> */}
+       
         <Box sx={{ display: "flex" }}>
           <CssBaseline />
           <AppBar
@@ -393,7 +324,7 @@ const Home = () => {
               open={mobileOpen}
               onClose={handleDrawerToggle}
               ModalProps={{
-                keepMounted: true, // Better open performance on mobile.
+                keepMounted: true, 
               }}
               sx={{
                 display: { xs: "block", sm: "none" },
@@ -545,7 +476,6 @@ const Home = () => {
                 header={searchHeader}
                 subHeader={searchSubHead}
                 code={searchCode}
-                onSearch={handleSearchInput}
               ></SearchComponent>
             </div>
           </Slide>
@@ -606,20 +536,6 @@ const Home = () => {
           )}
         </div>
       </Container>
-      {/* <Box className={styles.footer}>
-        <Link to="/understandingcoding">
-          <Typography
-            fontWeight={600}
-            fontSize={"20px"}
-            padding={"20px 0px"}
-            variant="h4"
-            textAlign={"left"}
-          >
-            <span>Understanding coding </span>
-            <ArrowRightAltIcon></ArrowRightAltIcon>
-          </Typography>
-        </Link>
-      </Box> */}
     </div>
   );
 };

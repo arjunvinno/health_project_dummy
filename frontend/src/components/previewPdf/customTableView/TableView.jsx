@@ -90,6 +90,7 @@ const TableView = ({
       );
     });
   }
+  
   function formatDate(dateString) {
     const date = new Date(dateString);
     const year = date.getFullYear();
@@ -97,6 +98,7 @@ const TableView = ({
     const day = ("0" + date.getDate()).slice(-2);
     return `${year}-${month}-${day}`;
   }
+  
   return (
     <div
       style={{
@@ -125,7 +127,7 @@ const TableView = ({
           aria-label="sticky table"
           id="reportDowmload"
         >
-          <TableHead className="header">
+          <TableHead >
             <TableRow className={styles.headerRow}>{setHeaders()}</TableRow>
           </TableHead>
           <TableBody>

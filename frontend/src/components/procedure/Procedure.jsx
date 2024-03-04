@@ -19,7 +19,7 @@ const Procedure = () => {
   const {
     apiDispatch,
     activeBtns,
-    datas: { proceduresOnId,codes },
+    datas: { proceduresOnId,codes,patient },
     handleBackDropOpen,
     handleBackDropClose,
     setDataRow1,
@@ -94,6 +94,15 @@ const Procedure = () => {
       await fetchData(
         apiDispatch,
         {
+          loading: types.getCodes_Loading,
+          dataType: types.getCodes,
+          error: types.getCodes_error,
+        },
+        `${path.current.includes("private")?'store/ccsdcode':'store/opcscode'}`
+      );
+      await fetchData(
+        apiDispatch,
+        {
           loading: types.GetProcedures_OnPatientId_Loading,
           dataType: types.GetProcedures_OnPatientId,
           error: types.GetProcedures_OnPatientId_error,
@@ -105,17 +114,7 @@ const Procedure = () => {
         }
       );
     })();
-    (async () => {
-    await fetchData(
-      apiDispatch,
-      {
-        loading: types.getCodes_Loading,
-        dataType: types.getCodes,
-        error: types.getCodes_error,
-      },
-      `${path.current.includes("private")?'store/ccsdcode':'store/opcscode'}`
-    );
-     })();
+
     return () => {
       apiDispatch({ type: types.ClearProceduresAlert_Messages });
       setDataRow1([]);
@@ -165,7 +164,7 @@ const Procedure = () => {
   }
 
   useEffect(() => {
-    if (proceduresOnId.loading ||codes.loading) {
+    if (proceduresOnId.loading ||codes.loading || patient.loading) {
       handleBackDropOpen();
     } else {
       if (proceduresOnId.data.length > 0) {
@@ -201,7 +200,8 @@ const Procedure = () => {
     proceduresOnId.success.message,
     privateCheck,
     location.pathname,
-    codes.loading
+    codes.loading,
+    patient.loading
   ]);
 
   useEffect(() => {
