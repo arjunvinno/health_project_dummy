@@ -40,7 +40,6 @@ const Customrow = ({
   const [open, setOpen] = React.useState(false);
   const { patientId } = useParams();
   const paragraphRef = React.useRef(null);
-  // const { dataRow1, dataRow2, dataRow3 } = useContext(ActionContext);
   const { apiDispatch } = useContext(ActionContext);
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -492,7 +491,7 @@ const Customrow = ({
                   : key === "date" || key === "dob"
                   ? formatDate(row[key])
                   : row[key]
-                  ? row[key]
+                  ?(['icd_10','opcs-4','ccsd'].includes(row[key])?row[key].toUpperCase().split("_").join(" "):row[key])
                   : "N/A"}
               </p>
               {(key === "comments" ||

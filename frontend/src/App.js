@@ -15,10 +15,6 @@ import Diagnosis from "./components/diagnosis/Diagnosis";
 import Procedure from "./components/procedure/Procedure";
 import MySavedCodes from "./components/mySavedCodes/MySavedCodes";
 import CodesBySpeciality from "./components/codesBySpeciality/CodesBySpeciality";
-// import 'bootstrap/dist/css/bootstrap.min.css';
-// import '../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js';
-// '/node_modules/bootstrap/dist/css/bootstrap.min.css'
-// import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 function App() {
   const { backDropOpen } = useContext(ActionContext);
 

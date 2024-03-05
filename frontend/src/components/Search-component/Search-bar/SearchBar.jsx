@@ -11,7 +11,6 @@ import SearchResults from "../Search-results/SearchResults";
 import { ActionContext } from "../../../context/ActionContext";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
-import { useTheme } from "@emotion/react";
 import { hostUrl } from "../../../context/ApiReducer";
 
 const SearchBar = ({

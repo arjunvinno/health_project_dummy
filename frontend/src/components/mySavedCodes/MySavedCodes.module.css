@@ -22,9 +22,12 @@
   .backIcon:hover {
     color: white;
   }
+  #menu{
+  left: 10px!important;
+  }
   @media screen and (min-width: 600px) {
     .container {
-      padding-left: 10px !important;
-      padding-right: 10px !important;
+      padding-left: 16px !important;
+      padding-right: 16px !important;
     }
   }

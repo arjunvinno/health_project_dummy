@@ -23,6 +23,8 @@ app.use("", procedureRouter);
 app.use("",savedCodeRouter)
 app.use("/store", storeToDBRouter);
 
+//Add yours custom port to run the server,default 8080
+//run npm i to install dependencies and npm run start to run the server
 const PORT = process.env.PORT || 8080;
 
 app.listen(PORT, async () => {

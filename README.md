@@ -19,7 +19,7 @@ The Health Record Project is a comprehensive system for managing patient records
 - **Material UI**: A popular React UI framework for implementing Google's Material Design.
 
 ## Setup Instructions
-
+- use Node version 18+
 ### Backend Setup
 
 1. Navigate to the `backend` directory.
@@ -38,5 +38,4 @@ The Health Record Project is a comprehensive system for managing patient records
 
 - Once both the frontend and backend servers are running, you can access the application through your web browser.
 - Users can navigate through the interface to view and manage patient records, diagnostics, and procedures.
-
 

@@ -1,65 +1,5 @@
 const Joi = require("joi");
 
-const emailCustomMessages = {
-  "string.base": "Email is not valid",
-  "string.email": "Email is not valid",
-  "string.empty": "Email is required",
-  "any.required": "Email is required",
-};
-
-const passwordCustomMessages = {
-  "string.base": "Password is not valid",
-  "string.empty": "password is required",
-  "any.required": "password is required",
-  "string.pattern.base":
-    "password must contain uppercase letter and lower case letter and number and special characters",
-  "string.min": "password must contain 8 characters",
-  "string.max": "password can have 15 characters maximum",
-};
-
-const signupValidatorOptions = {
-  validate: {
-    payload: Joi.object({
-      username: Joi.string().required(),
-      email: Joi.string()
-        .email({ tlds: { allow: false } })
-        .required()
-        .messages(emailCustomMessages),
-
-      password: Joi.string()
-        .min(8)
-        .max(15)
-        .required()
-        .regex(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-])/)
-        .messages(passwordCustomMessages),
-    }),
-    failAction: async (request, res, error) => {
-      throw error;
-    },
-  },
-};
-
-const passwordValidationOptions = {
-  validate: {
-    payload: Joi.object({
-      email: Joi.string()
-        .email({ tlds: { allow: false } })
-        .required()
-        .messages(emailCustomMessages),
-
-      password: Joi.string()
-        .min(8)
-        .max(15)
-        .required()
-        .regex(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-])/)
-        .messages(passwordCustomMessages),
-    }),
-    failAction: async (request, res, error) => {
-      throw error;
-    },
-  },
-};
-
 const getAllPatientsQueryValidator = {
   validate: {
     query: Joi.object({
@@ -80,6 +20,7 @@ const getSavedCodesValidator ={
     query: Joi.object({
       page: Joi.string().required(),
       limit: Joi.string().required(),
+      type: Joi.string().valid("icd_10", "opcs-4","ccsd","")
     }),
   },
 }
@@ -170,8 +111,6 @@ const addSavedCodeValidator = {
 }
 
 module.exports = {
-  signupValidatorOptions,
-  passwordValidationOptions,
   addPatientValidator,
   addDiagnosticValidator,
   addProcedureValidator,

@@ -103,7 +103,7 @@ td {
   justify-content: left;
 }
 .popUp {
-  max-width: 15vw !important;
+  max-width: calc(18vw) !important;
   word-wrap: break-word;
   word-break: break-all;
   white-space: wrap;
@@ -165,7 +165,7 @@ td {
     width: 7rem !important;
   }
   .popUp {
-    max-width: 15rem !important;
+    max-width: calc(25vw) !important;
   }
   .info {
     width: 7rem;

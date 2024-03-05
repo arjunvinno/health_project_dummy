@@ -18,23 +18,13 @@ import axios from "axios";
 import { hostUrl } from "../../context/ApiReducer";
 import { useParams } from "react-router-dom";
 import PatientViewDetails from "./PatientViewDetails/PatientViewDetails";
-import  { useReactToPrint } from "react-to-print";
+import { useReactToPrint } from "react-to-print";
 import { ActionContext } from "../../context/ActionContext";
 
 const PreviewPdf = ({ open, handleClose, isPrint }) => {
-  let [initialTableData, setinitialTableData] = useState({
-    tr1: [],
-    tr2: [],
-    tr3: [],
-  });
-  const [alertData, setAlertData] = useState({
-    severity: "",
-    message: "",
-  });
-  const {
 
+  const {
     datas: { patient },
-  
   } = useContext(ActionContext);
   let { patientId } = useParams();
   const componentPrintRef = useRef();
@@ -42,22 +32,23 @@ const PreviewPdf = ({ open, handleClose, isPrint }) => {
     data: [],
     dataRow1: [],
     dataRow2: [],
-    daatRow3: [],
+    dataRow3: [],
   });
   const [procedureNhsData, setprocedureNhsData] = useState({
     data: [],
     dataRow1: [],
     dataRow2: [],
-    daatRow3: [],
+    dataRow3: [],
   });
   const [procedurePrivateData, setprocedurePrivateData] = useState({
     data: [],
     dataRow1: [],
     dataRow2: [],
-    daatRow3: [],
+    dataRow3: [],
   });
 
   useEffect(() => {
+    console.log(open);
     if (open) {
       // Make API calls here
       (async () => {
@@ -68,15 +59,16 @@ const PreviewPdf = ({ open, handleClose, isPrint }) => {
           ...diagnosticsData,
           data: diagnosticResponse.data.data,
         });
-  
+
         let procedureNhsResponse = await axios.get(
           hostUrl + "/procedure/" + patientId + "/nhs"
         );
+        console.log(procedureNhsResponse);
         setprocedureNhsData({
           ...procedureNhsData,
           data: procedureNhsResponse.data.data,
         });
-  
+
         let procedurePrivateResponse = await axios.get(
           hostUrl + "/procedure/" + patientId + "/private"
         );
@@ -86,8 +78,15 @@ const PreviewPdf = ({ open, handleClose, isPrint }) => {
         });
       })();
     }
-   
   }, [open]);
+
+  useEffect(() => {
+    filterOnTableData(
+      procedurePrivateData,
+      ["surgical_procedures", "ward_procedures", "relevant_procedures"],
+      setprocedurePrivateData
+    );
+  }, [procedurePrivateData.data]);
 
   useEffect(() => {
     filterOnTableData(
@@ -95,17 +94,15 @@ const PreviewPdf = ({ open, handleClose, isPrint }) => {
       ["diagnoses", "co_morbidities", "con_diagnoses"],
       setDiagnosticsData
     );
+  }, [diagnosticsData.data]);
+  
+  useEffect(() => {
     filterOnTableData(
       procedureNhsData,
       ["surgical_procedures", "ward_procedures", "relevant_procedures"],
       setprocedureNhsData
     );
-    filterOnTableData(
-      procedurePrivateData,
-      ["surgical_procedures", "ward_procedures", "relevant_procedures"],
-      setprocedurePrivateData
-    );
-  }, [diagnosticsData.data, procedureNhsData.data, procedurePrivateData.data]);
+  }, [procedureNhsData.data]);
 
   function filterOnTableData(data, filters, setData) {
     let newData = { ...data };
@@ -194,10 +191,10 @@ const PreviewPdf = ({ open, handleClose, isPrint }) => {
     }
     const pdfOptions = {
       margin: 30,
-      filename: patient.data.firstName+ ".pdf",
+      filename: patient.data.firstName + ".pdf",
       image: { type: "jpeg", quality: 0.98 },
       enableLinks: true,
-      pagebreak: { mode: ['css', 'legacy'] ,avoid: ['tr','h6']},
+      pagebreak: { mode: ["css", "legacy"], avoid: ["tr", "h6"] },
       html2canvas: { scale: 2, useCORS: true },
       jsPDF: { unit: "pt", format: [800, 842], orientation: "p" },
     };
@@ -208,11 +205,11 @@ const PreviewPdf = ({ open, handleClose, isPrint }) => {
       .outputPdf()
       .save()
       .then((res) => {
-        handleClose()
+        handleClose();
       })
       .catch((error) => {
         console.log(error);
-        handleClose()
+        handleClose();
       });
   };
 
@@ -244,7 +241,7 @@ const PreviewPdf = ({ open, handleClose, isPrint }) => {
           id="customized-dialog-title"
           color={"#3e5282"}
         >
-          {isPrint ? (<>Print</>) : (<>Download</>)} Pdf
+          {isPrint ? <>Print</> : <>Download</>} Pdf
         </DialogTitle>
         <IconButton
           aria-label="close"
@@ -270,7 +267,7 @@ const PreviewPdf = ({ open, handleClose, isPrint }) => {
             style={{ margin: isPrint ? "15px" : "" }}
           >
             <Box marginBottom={"16px"}>
-              <PatientViewDetails ></PatientViewDetails>
+              <PatientViewDetails></PatientViewDetails>
               <Typography variant="h6" gutterBottom color="#305ec9">
                 Diagnostic
               </Typography>
@@ -296,7 +293,7 @@ const PreviewPdf = ({ open, handleClose, isPrint }) => {
               </Typography>
               <TableView
                 tableHeaders={procedureNhsTableHeaders}
-                tableType={"diagnostics"}
+                tableType={"procedure"}
                 activeBtns={{
                   edit: false,
                   save: true,
@@ -316,7 +313,7 @@ const PreviewPdf = ({ open, handleClose, isPrint }) => {
               </Typography>
               <TableView
                 tableHeaders={procedurePrivateTableHeaders}
-                tableType={"diagnostics"}
+                tableType={"procedure"}
                 activeBtns={{
                   edit: false,
                   save: true,
@@ -349,17 +346,7 @@ const PreviewPdf = ({ open, handleClose, isPrint }) => {
               download
             </Button>
           ) : (
-          //   <ReactToPrint
-          //   trigger={() => 
-          //     <Button
-          //     variant="contained"
-          //     // onClick={handlePrint}
-          //     className={styles.dialog_button_bg_clr}
-          //   >
-          //     Print
-          //   </Button>}
-          //   content={() =>  componentPrintRef.current}
-          // />
+         
             <Button
               variant="contained"
               onClick={handlePrint}

@@ -1,4 +1,11 @@
-import { Box, Container, Typography } from "@mui/material";
+import {
+  Box,
+  Container,
+  FormControl,
+  MenuItem,
+  Select,
+  Typography,
+} from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import ScrollToTop from "../ScrollToTop";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
@@ -7,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 import Customtable from "../table/Customtable";
 import { ActionContext } from "../../context/ActionContext";
 import { fetchData } from "../../context/ApiReducer";
-import * as types from "../../context/actionType"
+import * as types from "../../context/actionType";
 const MySavedCodes = () => {
   const navigate = useNavigate();
   const [page, setPage] = React.useState(0);
@@ -15,20 +22,21 @@ const MySavedCodes = () => {
   const {
     setDataRow1,
     apiDispatch,
-    datas: { allPatients,mySavedCodes },
+    datas: { allPatients, mySavedCodes },
     handleBackDropOpen,
     handleBackDropClose,
     dataRow1,
     dataRow2,
     dataRow3,
     setDataRow2,
-    setDataRow3
-    // handleAlertOpen,
+    setDataRow3,
   } = useContext(ActionContext);
+  const [activeSortValue,setSortValue]=useState(null)
   const [alertData, setAlertData] = useState({
     severity: "",
     message: "",
   });
+  const [filterType, setFilterType] = useState("");
   const tableHeaders = [
     {
       title: "CODE",
@@ -67,30 +75,29 @@ const MySavedCodes = () => {
         },
         "mysavedcodes",
         "",
-        {page:page,limit:rowsPerPage}
+        { page: page, limit: rowsPerPage,type:filterType }
       );
     })();
     return () => {
-      // apiDispatch({ type: types.ClearPatientsAlert_Messages });
     };
-  }, [page,rowsPerPage]);
+  }, [page, rowsPerPage,filterType]);
   useEffect(() => {
-    if (mySavedCodes.loading ) {
+    if (mySavedCodes.loading) {
       handleBackDropOpen();
     } else {
-    if(mySavedCodes.data.length>0){
+      if (mySavedCodes.data.length > 0) {
         setDataRow1(mySavedCodes.data);
       } else {
         setDataRow1([]);
       }
-     if (mySavedCodes.success.message) {
+      if (mySavedCodes.success.message) {
         setAlertData({
           severity: "success",
           message: mySavedCodes.success.message,
         });
       }
 
-     if (mySavedCodes.error.message) {
+      if (mySavedCodes.error.message) {
         setAlertData({
           severity: "error",
           message: mySavedCodes.error.message,
@@ -98,7 +105,6 @@ const MySavedCodes = () => {
       }
       setTimeout(() => {
         setAlertData({ severity: "", message: "" });
-        // apiDispatch({ type: types.ClearPatientsAlert_Messages });
       }, 1500);
       handleBackDropClose();
     }
@@ -108,6 +114,13 @@ const MySavedCodes = () => {
     mySavedCodes.error.message,
     mySavedCodes.success.message,
   ]);
+
+  let handleChange = (e) => {
+    setFilterType(e.target.value);
+    if(activeSortValue){
+      setSortValue(null)
+    }
+  };
   return (
     <div>
       <ScrollToTop></ScrollToTop>
@@ -126,6 +139,22 @@ const MySavedCodes = () => {
           >
             MY SAVED CODES
           </Typography>
+        </Box>
+        <Box sx={{width:'250px',marginBottom:'20px'}}>
+          <FormControl fullWidth >
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={filterType}
+              onChange={handleChange}
+              displayEmpty
+            >
+               <MenuItem value={""}>All</MenuItem>
+              <MenuItem value={"icd_10"}>ICD 10</MenuItem>
+              <MenuItem value={"opcs-4"}>OPCS-4</MenuItem>
+              <MenuItem value={"ccsd"}>CCSD</MenuItem>
+            </Select>
+          </FormControl>
         </Box>
 
         <Customtable
@@ -149,6 +178,8 @@ const MySavedCodes = () => {
           dataRow3={dataRow3}
           setDataRow2={setDataRow2}
           setDataRow3={setDataRow3}
+          activeSortValue={activeSortValue}
+          setSortValue={setSortValue}
         ></Customtable>
       </Container>
     </div>

@@ -1,6 +1,5 @@
 import {
   Paper,
-  Skeleton,
   Slide,
   Table,
   TableBody,
@@ -21,6 +20,8 @@ import { deleteData } from "../../context/ApiReducer";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import * as types from "../../context/actionType";
 import { useNavigate } from "react-router-dom";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 const Customtable = ({
   tableHeaders,
   tableType,
@@ -38,7 +39,9 @@ const Customtable = ({
   setDataRow2,
   dataRow3,
   setDataRow3,
-  activeBtns
+  activeBtns,
+  activeSortValue,
+  setSortValue
 }) => {
 
 
@@ -287,7 +290,13 @@ const Customtable = ({
           className={styles.thead}
           align="left"
         >
-          {row.title}
+          {row.title}{" "}
+          {row.title === "FREQUENCY" && (
+            <span style={{position:'relative'}}>
+              <ArrowDropUpIcon onClick={()=>sortByFrequency('asc')} sx={{color:activeSortValue==='asc' && 'black' }} className={styles.sortUpIcon}></ArrowDropUpIcon>
+              <ArrowDropDownIcon onClick={()=>sortByFrequency('desc')} sx={{color:activeSortValue==='desc' && 'black' }}  className={styles.sortDownIcon}></ArrowDropDownIcon>
+            </span>
+          )}
         </TableCell>
       );
     });
@@ -295,12 +304,29 @@ const Customtable = ({
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
+    if(activeSortValue){
+      setSortValue(null)
+    }
   };
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
+    if(activeSortValue){
+      setSortValue(null)
+    }
   };
+
+  let sortByFrequency=(sortType)=>{
+    let sortData;
+    if(sortType==='asc'){
+      sortData=dataRow1.slice().sort((a, b) => a.frequency - b.frequency);
+    }else{
+      sortData=dataRow1.slice().sort((a, b) => b.frequency - a.frequency);
+    }
+    setSortValue(sortType)
+    setDataRow1(sortData)
+  }
 
   return (
     <div

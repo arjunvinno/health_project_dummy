@@ -27,7 +27,7 @@
   color: #305ec9 !important ;
   background-color: #d9dcf3;
   font-size: 1rem;
-  padding: 20px 6px;
+  padding: 20px 10px;
 }
 .headerRow > td {
   font-weight: 600;
@@ -103,6 +103,16 @@ td {
 }
 .pointerEmpty {
   cursor: pointer !important;
+}
+.sortUpIcon{
+  position:absolute ;
+  top: -12px;
+  cursor: pointer;
+}
+.sortDownIcon{
+  position:absolute ;
+  bottom: -10px;
+  cursor: pointer;
 }
 @media screen and (max-width: 834px) {
   .headerRow > th {

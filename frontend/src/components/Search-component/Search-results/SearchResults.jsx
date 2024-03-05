@@ -1,24 +1,20 @@
-import React, { useContext, useEffect, useState } from "react";
-import * as types from "../../../context/actionType";
+import React, { useContext, useEffect } from "react";
 import styles from "./SearchResults.module.css";
 import { ActionContext } from "../../../context/ActionContext";
-import { Tooltip } from "@mui/material";
-const SearchResults = ({ setSearchTerm,searchResults, setSearchResults ,searchResultsRef }) => {
+const SearchResults = ({
+  setSearchTerm,
+  searchResults,
+  setSearchResults,
+  searchResultsRef,
+}) => {
   const {
-    datas,
     dataRow1,
     setDataRow1,
-    apiDispatch,
     dataRow2,
     setDataRow2,
     dataRow3,
     setDataRow3,
   } = useContext(ActionContext);
-  // const [searchResults, setSearchResults] = useState([]);
-
-  // useEffect(() => {
-  //   setSearchResults(datas.codes.data);
-  // }, [datas.codes.data]);
 
   function onselect(selectedData) {
     setSearchResults([]);
@@ -43,8 +39,6 @@ const SearchResults = ({ setSearchTerm,searchResults, setSearchResults ,searchRe
     setDataRow1(updatedDataRows[0]);
     setDataRow2(updatedDataRows[1]);
     setDataRow3(updatedDataRows[2]);
-
-    // apiDispatch({ type: types.clearSearchData });
   }
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -60,9 +54,8 @@ const SearchResults = ({ setSearchTerm,searchResults, setSearchResults ,searchRe
     document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
-      setSearchResults([])
+      setSearchResults([]);
       document.removeEventListener("mousedown", handleClickOutside);
-      // apiDispatch({ type: types.clearSearchData });
     };
   }, []);
 
@@ -73,27 +66,17 @@ const SearchResults = ({ setSearchTerm,searchResults, setSearchResults ,searchRe
     >
       {searchResults.length > 0 &&
         searchResults.map((result, index) => (
-          // <Tooltip
-          //   title={result.description}
-          //   placement="top"
-          //   arrow
-          //   disableInteractive
-          //   PopperProps={{ disablePortal: true }}
-          //   key={index}
-          //   sx={{ fontSize: "40px!important" }}
-          // >
-            <p
-              style={{ background: "white" }}
-              key={index}
-              onClick={() =>
-                result.description !== "No Results" &&
-                result.description !== "...loading" &&
-                onselect(result)
-              }
-            >
-              {result.description}
-            </p>
-          /* </Tooltip> */
+          <p
+            style={{ background: "white" }}
+            key={index}
+            onClick={() =>
+              result.description !== "No Results" &&
+              result.description !== "...loading" &&
+              onselect(result)
+            }
+          >
+            {result.description}
+          </p>
         ))}
     </div>
   );

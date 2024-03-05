@@ -1,13 +1,11 @@
 import * as types from "./actionType";
 import axios from "axios";
 
-// export const hostUrl = "http://localhost:8080";
-
-export const hostUrl ="https://health-project-dummy.onrender.com"
+export const hostUrl = "http://localhost:8080";//Replace with your server url
 
 export const apiReducer = (state, action) => {
   switch (action.type) {
-    // codes
+    //search codes
     case types.getCodes_Loading: {
       let newState = { ...state };
       newState.codes.loading = true;

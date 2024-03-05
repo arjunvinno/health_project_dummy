@@ -307,8 +307,8 @@ const Home = () => {
                 CODE FINDER
               </Typography>
               <Box sx={{ display: { xs: "none", sm: "block" } }}>
-                {navItems.map((item) => (
-                  <Link to={item.link}>
+                {navItems.map((item,i) => (
+                  <Link to={item.link} key={i}>
                     <Button key={item.title} sx={{ color: "#fff" }}>
                       {item.title}
                     </Button>
