@@ -1,7 +1,7 @@
 import * as types from "./actionType";
 import axios from "axios";
 
-export const hostUrl = "http://localhost:8080";//Replace with your server url
+export const hostUrl =process.env.REACT_APP_hostUrl;//Replace with your server url
 
 export const apiReducer = (state, action) => {
   switch (action.type) {
